@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactElement } from 'react';
 import { Animated, Dimensions, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, space } from '@/theme';
+import * as Haptics from 'expo-haptics';
+import { colors, radius, space } from '@/theme';
 
 const SCREEN_W = Dimensions.get('window').width;
 const THRESHOLD = SCREEN_W * 0.27;
@@ -32,6 +33,8 @@ export function SwipeDeck<T>({ items, keyOf, renderCard, onSwipe, empty }: Props
     (dir: SwipeDirection) => {
       if (busy.current || !itemsRef.current[indexRef.current]) return;
       busy.current = true;
+      // Respuesta táctil: más fuerte cuando es "me encanta"
+      void Haptics.impactAsync(dir === 'like' ? Haptics.ImpactFeedbackStyle.Medium : Haptics.ImpactFeedbackStyle.Light);
       Animated.timing(position, {
         toValue: { x: dir === 'like' ? SCREEN_W * 1.4 : -SCREEN_W * 1.4, y: 0 },
         duration: 220,
@@ -90,10 +93,10 @@ export function SwipeDeck<T>({ items, keyOf, renderCard, onSwipe, empty }: Props
         >
           {renderCard(current)}
           <Animated.View style={[styles.stamp, styles.stampLike, { opacity: likeOpacity }]}>
-            <Text style={[styles.stampText, { color: colors.like }]}>ME ENCANTA</Text>
+            <Text style={[styles.stampText, { color: colors.text }]}>¡Me encanta!</Text>
           </Animated.View>
           <Animated.View style={[styles.stamp, styles.stampPass, { opacity: passOpacity }]}>
-            <Text style={[styles.stampText, { color: colors.pass }]}>PASO</Text>
+            <Text style={[styles.stampText, { color: '#FFFFFF' }]}>Paso</Text>
           </Animated.View>
         </Animated.View>
       </View>
@@ -103,17 +106,17 @@ export function SwipeDeck<T>({ items, keyOf, renderCard, onSwipe, empty }: Props
           accessibilityRole="button"
           accessibilityLabel="Pasar a la siguiente mascota"
           onPress={() => forceSwipe('pass')}
-          style={[styles.actionBtn, { borderColor: colors.pass }]}
+          style={({ pressed }) => [styles.actionBtn, { flex: 1, backgroundColor: colors.tint }, pressed && styles.pressed]}
         >
-          <Text style={{ fontSize: 28 }}>✖️</Text>
+          <Text style={styles.actionText}>✕  Pasar</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Me interesa esta mascota"
           onPress={() => forceSwipe('like')}
-          style={[styles.actionBtn, { borderColor: colors.like }]}
+          style={({ pressed }) => [styles.actionBtn, { flex: 1.5, backgroundColor: colors.sun }, pressed && styles.pressed]}
         >
-          <Text style={{ fontSize: 28 }}>💚</Text>
+          <Text style={styles.actionText}>♥  Me encanta</Text>
         </Pressable>
       </View>
     </View>
@@ -124,13 +127,12 @@ const styles = StyleSheet.create({
   wrap: { flex: 1 },
   stack: { flex: 1 },
   layer: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 },
-  actions: { flexDirection: 'row', justifyContent: 'center', gap: space.xl, paddingVertical: space.lg },
-  actionBtn: {
-    width: 64, height: 64, borderRadius: 32, borderWidth: 2, backgroundColor: '#fff',
-    alignItems: 'center', justifyContent: 'center',
-  },
-  stamp: { position: 'absolute', top: 32, borderWidth: 4, borderRadius: 10, paddingHorizontal: 10, paddingVertical: 4, backgroundColor: 'rgba(255,255,255,0.85)' },
-  stampLike: { left: 24, borderColor: colors.like, transform: [{ rotate: '-12deg' }] },
-  stampPass: { right: 24, borderColor: colors.pass, transform: [{ rotate: '12deg' }] },
-  stampText: { fontSize: 22, fontWeight: '900' },
+  actions: { flexDirection: 'row', gap: space.md, paddingTop: space.lg, paddingBottom: space.sm },
+  actionBtn: { height: 58, borderRadius: radius.pill, alignItems: 'center', justifyContent: 'center' },
+  actionText: { fontSize: 16, fontWeight: '900', color: colors.text },
+  pressed: { transform: [{ scale: 0.96 }] },
+  stamp: { position: 'absolute', top: 36, paddingHorizontal: 14, paddingVertical: 8, borderRadius: radius.md },
+  stampLike: { left: 24, backgroundColor: colors.sun, transform: [{ rotate: '-10deg' }] },
+  stampPass: { right: 24, backgroundColor: colors.pass, transform: [{ rotate: '10deg' }] },
+  stampText: { fontSize: 24, fontWeight: '900', letterSpacing: -0.4 },
 });

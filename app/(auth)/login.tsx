@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, Text } from 'react-native';
 import { Link } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Screen, TextField, styles } from '@/components/ui';
+import { AuthShell, Button, TextField, styles } from '@/components/ui';
 import { useAuth } from '@/providers/AuthProvider';
 import { errMsg } from '@/lib/format';
 import { colors, space } from '@/theme';
@@ -35,12 +35,8 @@ export default function LoginScreen() {
   });
 
   return (
-    <Screen scroll>
-      <View style={{ alignItems: 'center', marginVertical: space.xl }}>
-        <Text style={{ fontSize: 64 }}>🐾</Text>
-        <Text style={styles.h1}>Pet Delivery</Text>
-        <Text style={[styles.muted, { marginTop: 4 }]}>Adopta, agenda y cuida a tu mascota</Text>
-      </View>
+    <AuthShell title="Pet Delivery" subtitle="Adopta, agenda y cuida a tu mascota en un solo lugar.">
+      <Text style={[styles.h2, { marginBottom: space.lg }]}>Ingresa a tu cuenta</Text>
       <Controller control={control} name="email" render={({ field: { value, onChange, onBlur } }) => (
         <TextField label="Correo" value={value} onChangeText={onChange} onBlur={onBlur} autoCapitalize="none"
           keyboardType="email-address" autoComplete="email" error={errors.email?.message} />
@@ -49,11 +45,11 @@ export default function LoginScreen() {
         <TextField label="Contraseña" value={value} onChangeText={onChange} onBlur={onBlur} secureTextEntry
           autoComplete="password" error={errors.password?.message} />
       )} />
-      <Button title="Ingresar" onPress={onSubmit} loading={busy} />
-      <Text style={[styles.muted, { textAlign: 'center', marginTop: space.lg }]}>
-        ¿No tienes cuenta?{' '}
-        <Link href="/register" style={{ color: colors.primary, fontWeight: '700' }}>Regístrate</Link>
+      <Button title="Ingresar" onPress={onSubmit} loading={busy} style={{ marginTop: space.sm }} />
+      <Text style={[styles.muted, { textAlign: 'center', marginTop: space.xl }]}>
+        ¿Aún no tienes cuenta?{' '}
+        <Link href="/register" style={{ color: colors.primary, fontWeight: '800' }}>Crea una gratis</Link>
       </Text>
-    </Screen>
+    </AuthShell>
   );
 }

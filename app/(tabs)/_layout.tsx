@@ -1,9 +1,11 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { Tabs } from 'expo-router';
 import { colors } from '@/theme';
 
 const icon = (emoji: string) => ({ focused }: { focused: boolean }) => (
-  <Text style={{ fontSize: 22, opacity: focused ? 1 : 0.5 }}>{emoji}</Text>
+  <View style={{ width: 54, height: 30, borderRadius: 15, alignItems: 'center', justifyContent: 'center', backgroundColor: focused ? colors.sun : 'transparent' }}>
+    <Text style={{ fontSize: 19 }}>{emoji}</Text>
+  </View>
 );
 
 export default function TabsLayout() {
@@ -11,9 +13,21 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
+        tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: colors.muted,
-        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '800' },
+        tabBarStyle: {
+          backgroundColor: colors.card,
+          borderTopWidth: 0,
+          height: 68,
+          paddingTop: 8,
+          paddingBottom: 8,
+          elevation: 12,
+          shadowColor: '#10261F',
+          shadowOpacity: 0.08,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: -3 },
+        },
       }}
     >
       <Tabs.Screen name="index" options={{ title: 'Adoptar', tabBarIcon: icon('🐶') }} />

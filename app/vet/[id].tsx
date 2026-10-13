@@ -1,10 +1,11 @@
-import { Linking, Text, View } from 'react-native';
+import { Linking, Pressable, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Badge, Button, Card, ErrorState, Loading, Screen, SectionTitle, styles } from '@/components/ui';
+import { Avatar, Badge, Button, ErrorState, Loading, Row, Screen, SectionTitle, styles } from '@/components/ui';
+import { PricePill } from '@/components/extras';
 import { useServices, useVet } from '@/hooks/queries';
 import { UuidParam } from '@/lib/schemas';
-import { errMsg, formatCOP } from '@/lib/format';
-import { colors, space } from '@/theme';
+import { errMsg } from '@/lib/format';
+import { colors, radius, space } from '@/theme';
 
 export default function VetDetailRoute() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -23,19 +24,41 @@ function VetDetail({ id }: { id: string }) {
 
   return (
     <Screen scroll>
-      <Text style={styles.h1}>{v.name}</Text>
-      {v.address ? <Text style={[styles.muted, { marginTop: 4 }]}>📍 {v.address}</Text> : null}
-      {v.description ? <Text style={[styles.body, { marginTop: space.md }]}>{v.description}</Text> : null}
-
-      <View style={{ flexDirection: 'row', gap: space.sm, marginTop: space.md }}>
-        {v.whatsapp ? (
-          <Button title="WhatsApp" variant="secondary" onPress={() => Linking.openURL(`https://wa.me/${v.whatsapp}`)} style={{ flex: 1 }} />
-        ) : null}
-        {v.phone ? (
-          <Button title="Llamar" variant="secondary" onPress={() => Linking.openURL(`tel:${v.phone}`)} style={{ flex: 1 }} />
+      <View style={{ backgroundColor: colors.sky, borderRadius: radius.lg, padding: space.xl }}>
+        <Avatar label={v.name} size={72} />
+        <Text style={[styles.h1, { marginTop: space.md }]}>{v.name}</Text>
+        {v.address ? <Text style={[styles.muted, { marginTop: 4, color: colors.text }]}>📍 {v.address}</Text> : null}
+        {v.description ? <Text style={[styles.body, { marginTop: space.sm }]}>{v.description}</Text> : null}
+        {v.offers_home_visits ? (
+          <View style={{ marginTop: space.md }}>
+            <Badge label="Va hasta tu casa" color={colors.primary} />
+          </View>
         ) : null}
       </View>
-      <Button title="Ver su tienda" variant="secondary" onPress={() => router.push({ pathname: '/shop', params: { vetId: v.id } })} style={{ marginTop: space.sm }} />
+
+      {v.whatsapp || v.phone ? (
+        <View style={{ flexDirection: 'row', gap: space.sm, marginTop: space.md }}>
+          {v.whatsapp ? (
+            <Button title="💬  WhatsApp" onPress={() => Linking.openURL(`https://wa.me/${v.whatsapp}`)} style={{ flex: 1 }} />
+          ) : null}
+          {v.phone ? (
+            <Button title="📞  Llamar" variant="secondary" onPress={() => Linking.openURL(`tel:${v.phone}`)} style={{ flex: 1 }} />
+          ) : null}
+        </View>
+      ) : null}
+
+      <Pressable accessibilityRole="button" onPress={() => router.push({ pathname: '/shop', params: { vetId: v.id } })} style={{ marginTop: space.sm }}>
+        <Row>
+          <View style={{ width: 48, height: 48, borderRadius: 16, backgroundColor: colors.sunSoft, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={{ fontSize: 24 }}>🛍️</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.h3}>Ver su tienda</Text>
+            <Text style={styles.muted}>Alimento, accesorios y más</Text>
+          </View>
+          <Text style={{ fontSize: 22, color: colors.muted }}>›</Text>
+        </Row>
+      </Pressable>
 
       <SectionTitle>Servicios</SectionTitle>
       {services.isLoading ? (
@@ -46,18 +69,21 @@ function VetDetail({ id }: { id: string }) {
         <Text style={styles.muted}>Esta veterinaria aún no ha publicado servicios.</Text>
       ) : (
         services.data.map((s) => (
-          <Card key={s.id}>
-            <View style={styles.between}>
-              <Text style={[styles.h3, { flex: 1 }]}>{s.name}</Text>
-              <Text style={[styles.h3, { color: colors.primaryDark }]}>{formatCOP(s.price)}</Text>
+          <Row key={s.id} style={{ alignItems: 'flex-start' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.h3}>{s.name}</Text>
+              <Text style={[styles.muted, { marginVertical: 4 }]}>⏱ {s.duration_min} minutos</Text>
+              {v.offers_home_visits && s.home_available ? <Badge label="También a domicilio" color={colors.like} /> : null}
             </View>
-            <Text style={[styles.muted, { marginVertical: space.sm }]}>⏱ {s.duration_min} min</Text>
-            <View style={{ flexDirection: 'row', gap: space.sm, marginBottom: space.md }}>
-              <Badge label="En la veterinaria" color={colors.info} />
-              {v.offers_home_visits && s.home_available ? <Badge label={`A domicilio +${formatCOP(v.home_fee)}`} color={colors.like} /> : null}
+            <View style={{ alignItems: 'flex-end', gap: space.sm }}>
+              <PricePill value={s.price} />
+              <Button
+                title="Agendar"
+                onPress={() => router.push({ pathname: `/book/${v.id}`, params: { serviceId: s.id } })}
+                style={{ minHeight: 40, paddingVertical: 8, paddingHorizontal: 20 }}
+              />
             </View>
-            <Button title="Agendar" onPress={() => router.push({ pathname: `/book/${v.id}`, params: { serviceId: s.id } })} />
-          </Card>
+          </Row>
         ))
       )}
     </Screen>

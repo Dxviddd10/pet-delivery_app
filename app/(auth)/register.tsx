@@ -4,8 +4,7 @@ import { Link, router } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Screen, TextField, styles } from '@/components/ui';
-import { useAuth } from '@/providers/AuthProvider';
+import { AuthShell, Button, TextField, styles } from '@/components/ui';import { useAuth } from '@/providers/AuthProvider';
 import { errMsg } from '@/lib/format';
 import { colors, space } from '@/theme';
 
@@ -41,8 +40,7 @@ export default function RegisterScreen() {
   });
 
   return (
-    <Screen scroll>
-      <Text style={[styles.h1, { marginVertical: space.lg }]}>Crea tu cuenta</Text>
+       <AuthShell title="Crea tu cuenta" subtitle="Es gratis y toma menos de un minuto.">
       <Controller control={control} name="fullName" render={({ field: { value, onChange, onBlur } }) => (
         <TextField label="Nombre completo" value={value} onChangeText={onChange} onBlur={onBlur} autoComplete="name" error={errors.fullName?.message} />
       )} />
@@ -62,6 +60,6 @@ export default function RegisterScreen() {
       <Text style={[styles.muted, { textAlign: 'center', marginTop: space.lg }]}>
         ¿Ya tienes cuenta? <Link href="/login" style={{ color: colors.primary, fontWeight: '700' }}>Ingresa</Link>
       </Text>
-    </Screen>
+    </AuthShell>
   );
 }

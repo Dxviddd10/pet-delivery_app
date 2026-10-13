@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
-import { Button, Card, Chip, ChipRow, ErrorState, Loading, Screen, SectionTitle, TextField, styles } from '@/components/ui';
+import { Button, Chip, ChipRow, ErrorState, Loading, Screen, TextField, styles } from '@/components/ui';
+import { Footer, OptionTile } from '@/components/extras';
 import { useMyPets, useRequestAppointment, useServices, useVet } from '@/hooks/queries';
 import { UuidParam } from '@/lib/schemas';
-import { errMsg, formatCOP } from '@/lib/format';
-import { colors, space } from '@/theme';
+import { errMsg, formatCOP, speciesEmoji } from '@/lib/format';
+import { colors, radius, space } from '@/theme';
 
 const HOURS = [8, 9, 10, 11, 14, 15, 16, 17];
 const DAY_NAMES = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
@@ -16,6 +17,21 @@ export default function BookRoute() {
   if (!vetId.success) return <ErrorState message="Veterinaria no válida" />;
   const serviceId = UuidParam.safeParse(params.serviceId);
   return <Book vetId={vetId.data} initialServiceId={serviceId.success ? serviceId.data : null} />;
+}
+
+// Paso numerado: aquí sí es una secuencia real
+function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
+  return (
+    <View style={{ marginTop: space.xl }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: space.md }}>
+        <View style={{ width: 26, height: 26, borderRadius: 13, backgroundColor: colors.sun, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 13, fontWeight: '900', color: colors.text }}>{n}</Text>
+        </View>
+        <Text style={styles.h2}>{title}</Text>
+      </View>
+      {children}
+    </View>
+  );
 }
 
 function Book({ vetId, initialServiceId }: { vetId: string; initialServiceId: string | null }) {
@@ -79,79 +95,106 @@ function Book({ vetId, initialServiceId }: { vetId: string; initialServiceId: st
   };
 
   return (
-    <Screen scroll>
-      <Text style={styles.h2}>{vet.data.name}</Text>
+    <Screen padded={false}>
+      <ScrollView contentContainerStyle={{ padding: space.lg, paddingBottom: space.xl }} keyboardShouldPersistTaps="handled">
+        <Text style={styles.h1}>{vet.data.name}</Text>
 
-      <SectionTitle>1. Servicio</SectionTitle>
-      <ChipRow>
-        {services.data?.map((s) => (
-          <Chip key={s.id} label={`${s.name} · ${formatCOP(s.price)}`} selected={s.id === serviceId} onPress={() => setServiceId(s.id)} />
-        ))}
-      </ChipRow>
-
-      <SectionTitle>2. Mascota</SectionTitle>
-      {pets.data?.length ? (
-        <ChipRow>
-          {pets.data.map((p) => (
-            <Chip key={p.id} label={p.name} selected={p.id === petId} onPress={() => setPetId(p.id)} />
+        <Step n={1} title="¿Qué necesita tu mascota?">
+          {services.data?.map((s) => (
+            <OptionTile
+              key={s.id}
+              title={s.name}
+              subtitle={`${s.duration_min} minutos`}
+              right={formatCOP(s.price)}
+              selected={s.id === serviceId}
+              onPress={() => setServiceId(s.id)}
+            />
           ))}
-        </ChipRow>
-      ) : (
-        <Card>
-          <Text style={[styles.muted, { marginBottom: space.md }]}>Aún no tienes mascotas registradas.</Text>
-          <Button title="Registrar mascota" variant="secondary" onPress={() => router.push('/pet/new')} />
-        </Card>
-      )}
+        </Step>
 
-      <SectionTitle>3. ¿Dónde?</SectionTitle>
-      <ChipRow>
-        <Chip label="En la veterinaria" selected={effectiveMode === 'in_clinic'} onPress={() => setMode('in_clinic')} />
-        {canHome ? <Chip label={`A domicilio (+${formatCOP(vet.data.home_fee)})`} selected={effectiveMode === 'home'} onPress={() => setMode('home')} /> : null}
-      </ChipRow>
-      {effectiveMode === 'home' ? (
-        <TextField label="Dirección de la visita" value={address} onChangeText={setAddress} placeholder="Calle, número, barrio y referencias" />
-      ) : null}
-
-      <SectionTitle>4. Fecha y hora</SectionTitle>
-      <ChipRow>
-        {days.map((d, i) => (
-          <Chip key={i} label={i === 0 ? 'Hoy' : `${DAY_NAMES[d.getDay()]} ${d.getDate()}`} selected={i === dayOffset} onPress={() => setDayOffset(i)} />
-        ))}
-      </ChipRow>
-      <ChipRow>
-        {HOURS.map((h) => {
-          const d = new Date(days[dayOffset]);
-          d.setHours(h, 0, 0, 0);
-          const past = d.getTime() < Date.now() + 60 * 60 * 1000;
-          return (
-            <View key={h} style={past ? { opacity: 0.35 } : undefined} pointerEvents={past ? 'none' : 'auto'}>
-              <Chip label={`${h % 12 === 0 ? 12 : h % 12}:00 ${h < 12 ? 'a. m.' : 'p. m.'}`} selected={h === hour} onPress={() => setHour(h)} />
+        <Step n={2} title="¿Para quién es?">
+          {pets.data?.length ? (
+            <ChipRow>
+              {pets.data.map((p) => (
+                <Chip key={p.id} label={`${speciesEmoji[p.species]} ${p.name}`} selected={p.id === petId} onPress={() => setPetId(p.id)} />
+              ))}
+            </ChipRow>
+          ) : (
+            <View>
+              <Text style={[styles.muted, { marginBottom: space.md }]}>Aún no tienes mascotas registradas.</Text>
+              <Button title="Registrar mascota" variant="secondary" onPress={() => router.push('/pet/new')} />
             </View>
-          );
-        })}
-      </ChipRow>
+          )}
+        </Step>
 
-      <TextField label="Notas para la veterinaria (opcional)" value={notes} onChangeText={setNotes} multiline placeholder="Síntomas, alergias, comportamiento..." />
+        <Step n={3} title="¿Dónde?">
+          <View style={{ flexDirection: 'row', gap: space.sm }}>
+            <OptionTile stacked emoji="🏥" title="En la veterinaria" subtitle="Sin costo extra" selected={effectiveMode === 'in_clinic'} onPress={() => setMode('in_clinic')} style={{ flex: 1 }} />
+            {canHome ? (
+              <OptionTile stacked emoji="🏠" title="En tu casa" subtitle={`+${formatCOP(vet.data.home_fee)}`} selected={effectiveMode === 'home'} onPress={() => setMode('home')} style={{ flex: 1 }} />
+            ) : null}
+          </View>
+          {effectiveMode === 'home' ? (
+            <TextField label="Dirección de la visita" value={address} onChangeText={setAddress} placeholder="Calle, número, barrio y referencias" />
+          ) : null}
+        </Step>
 
-      <Card style={{ backgroundColor: '#FFF1E4' }}>
-        <View style={styles.between}>
-          <Text style={styles.body}>Servicio</Text>
-          <Text style={styles.body}>{formatCOP(service?.price ?? 0)}</Text>
+        <Step n={4} title="¿Cuándo?">
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.sm, paddingBottom: space.md }}>
+            {days.map((d, i) => {
+              const active = i === dayOffset;
+              return (
+                <Pressable
+                  key={i}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                  onPress={() => setDayOffset(i)}
+                  style={{ width: 62, paddingVertical: 10, borderRadius: 18, alignItems: 'center', backgroundColor: active ? colors.primary : colors.tint }}
+                >
+                  <Text style={{ fontSize: 12, fontWeight: '800', color: active ? '#FFFFFF' : colors.muted }}>{i === 0 ? 'Hoy' : DAY_NAMES[d.getDay()]}</Text>
+                  <Text style={{ fontSize: 22, fontWeight: '900', color: active ? '#FFFFFF' : colors.text }}>{d.getDate()}</Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+          <ChipRow>
+            {HOURS.map((h) => {
+              const d = new Date(days[dayOffset]);
+              d.setHours(h, 0, 0, 0);
+              const past = d.getTime() < Date.now() + 60 * 60 * 1000;
+              return (
+                <View key={h} style={past ? { opacity: 0.35 } : undefined} pointerEvents={past ? 'none' : 'auto'}>
+                  <Chip label={`${h % 12 === 0 ? 12 : h % 12}:00 ${h < 12 ? 'a. m.' : 'p. m.'}`} selected={h === hour} onPress={() => setHour(h)} />
+                </View>
+              );
+            })}
+          </ChipRow>
+        </Step>
+
+        <View style={{ marginTop: space.md }}>
+          <TextField label="Notas para la veterinaria (opcional)" value={notes} onChangeText={setNotes} multiline placeholder="Síntomas, alergias, comportamiento..." />
         </View>
+
         {homeFee > 0 ? (
-          <View style={styles.between}>
-            <Text style={styles.body}>Recargo a domicilio</Text>
-            <Text style={styles.body}>{formatCOP(homeFee)}</Text>
+          <View style={{ backgroundColor: colors.sunSoft, borderRadius: radius.md, padding: space.lg }}>
+            <View style={styles.between}><Text style={styles.body}>Servicio</Text><Text style={styles.body}>{formatCOP(service?.price ?? 0)}</Text></View>
+            <View style={styles.between}><Text style={styles.body}>Visita a domicilio</Text><Text style={styles.body}>{formatCOP(homeFee)}</Text></View>
           </View>
         ) : null}
-        <View style={[styles.between, { marginTop: space.sm }]}>
-          <Text style={styles.h3}>Total</Text>
-          <Text style={[styles.h3, { color: colors.primaryDark }]}>{formatCOP(total)}</Text>
-        </View>
-        <Text style={[styles.muted, { fontSize: 12, marginTop: space.sm }]}>Pagas directamente a la veterinaria (efectivo o transferencia). La cita queda sujeta a su confirmación.</Text>
-      </Card>
+      </ScrollView>
 
-      <Button title="Solicitar cita" onPress={submit} loading={request.isPending} />
+      <Footer>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: space.lg }}>
+          <View>
+            <Text style={styles.muted}>Total</Text>
+            <Text style={{ fontSize: 24, fontWeight: '900', color: colors.text, letterSpacing: -0.5 }}>{formatCOP(total)}</Text>
+          </View>
+          <Button title="Solicitar cita" onPress={submit} loading={request.isPending} style={{ flex: 1 }} />
+        </View>
+        <Text style={[styles.muted, { fontSize: 12, marginTop: space.sm }]}>
+          Pagas directamente a la veterinaria. La cita queda sujeta a su confirmación.
+        </Text>
+      </Footer>
     </Screen>
   );
 }

@@ -18,9 +18,14 @@ export default async function NuevaVetPage({ searchParams }: { searchParams: Pro
             </Field>
           </div>
           <Field label="Dirección"><input name="address" maxLength={160} className={inputClass} /></Field>
-          <Field label="Correo del dueño (opcional)" hint="Debe tener cuenta creada (Authentication → Users). Quedará como dueño con acceso al panel.">
-            <input name="owner_email" type="email" className={inputClass} />
-          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Correo del dueño (opcional)" hint="Si no tiene cuenta creada, se registrará automáticamente.">
+              <input name="owner_email" type="email" className={inputClass} placeholder="dueno@veterinaria.co" />
+            </Field>
+            <Field label="Contraseña temporal" hint="Mínimo 6 caracteres (ej: Pet123456*)">
+              <input name="owner_password" type="password" minLength={6} className={inputClass} placeholder="Mínimo 6 caracteres (ej: Pet123456*)" />
+            </Field>
+          </div>
           <SubmitButton className={btnPrimary}>Crear veterinaria</SubmitButton>
         </form>
       </Card>

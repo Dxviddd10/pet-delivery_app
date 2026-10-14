@@ -4,7 +4,7 @@ import { Badge, Card, Empty, ErrorBanner, OkBanner, PageHeader, btnDanger, btnPr
 import { AdminMember, AdminVet, MONTH_RE } from '@/lib/admin-schemas';
 import { requireAdmin } from '@/lib/auth';
 import { formatCOP } from '@/lib/format';
-import { addMember, removeMember, setCommission, setVetStatus } from './actions';
+import { addMember, deleteVet, removeMember, setCommission, setVetStatus } from './actions';
 
 const statusInfo = {
   pending: { label: 'Pendiente de aprobación', tone: 'amber' },
@@ -105,6 +105,16 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
                         <SubmitButton className={btnPrimary}>{v.vet_status === 'pending' ? 'Aprobar' : 'Reactivar'}</SubmitButton>
                       </>
                     )}
+                  </form>
+                  <form action={deleteVet}>
+                    <input type="hidden" name="vet" value={v.vet_id} />
+                    <input type="hidden" name="mes" value={mes} />
+                    <SubmitButton
+                      className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-100 transition"
+                      confirm={`¿Eliminar definitivamente "${v.vet_name}"? Si contiene pedidos históricos será suspendida.`}
+                    >
+                      🗑️ Eliminar
+                    </SubmitButton>
                   </form>
                 </div>
 

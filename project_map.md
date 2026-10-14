@@ -3,7 +3,7 @@
 
 ## 📊 1. Resumen General del Repositorio
 - **Archivos analizados:** `89`
-- **Líneas de código totales:** `9,176`
+- **Líneas de código totales:** `9,752`
 - **Rutas identificadas (Expo / Next.js):** `35`
 - **Componentes React identificados:** `49`
 - **Custom Hooks identificados:** `20`
@@ -14,9 +14,9 @@
 | :--- | :--- |
 | Web Admin Panel (Next.js Page/Route) | 30 |
 | Mobile App (Expo Router) | 15 |
-| Web Admin Core/Config | 9 |
+| Web Admin Core/Config | 8 |
 | Project Root Config/Doc | 7 |
-| Web Admin Library/Service | 6 |
+| Web Admin Library/Service | 7 |
 | Web Admin Component | 5 |
 | Mobile Component | 4 |
 | Database & Backend (Supabase) | 4 |
@@ -71,12 +71,17 @@
 | Next.js Page: /sin-acceso | [`panel/src/app/sin-acceso/page.tsx`](file:///panel/src/app/sin-acceso/page.tsx) |
 
 ## 🗄️ 3. Modelo de Datos y Backend (Supabase SQL)
-### Archivo: [`supabase/admin.sql`](file:///supabase/admin.sql) (160 líneas)
-- **Funciones:** `admin_add_vet_member`, `admin_create_vet`, `admin_members`, `admin_remove_vet_member`, `admin_set_vet_commission`, `admin_set_vet_status`, `admin_vet_summary`
-- **Políticas RLS (3):**
+### Archivo: [`supabase/admin.sql`](file:///supabase/admin.sql) (274 líneas)
+- **Funciones:** `admin_add_vet_member`, `admin_confirm_user_email`, `admin_create_vet`, `admin_delete_vet`, `admin_get_user_id_by_email`, `admin_link_vet_member`, `admin_members`, `admin_remove_vet_member`, `admin_set_vet_commission`, `admin_set_vet_status`, `admin_vet_summary`
+- **Políticas RLS (8):**
   - `products_select ON products`
   - `services_select ON services`
   - `listings_select ON adoption_listings`
+  - `Users can view their own vet memberships ON vet_members`
+  - `Admins can manage vet memberships ON vet_members`
+  - `Users can view their own profile ON profiles`
+  - `Admins can update profiles ON profiles`
+  - `Admins can insert profiles ON profiles`
 
 ### Archivo: [`supabase/panel.sql`](file:///supabase/panel.sql) (61 líneas)
 - **Políticas RLS (6):**
@@ -87,22 +92,22 @@
   - `pet_photos_vet_update ON storage`
   - `pet_photos_vet_delete ON storage`
 
-### Archivo: [`supabase/schema.sql`](file:///supabase/schema.sql) (597 líneas)
+### Archivo: [`supabase/schema.sql`](file:///supabase/schema.sql) (599 líneas)
 - **Tablas:** `adoption_listings`, `adoption_requests`, `adoption_swipes`, `appointments`, `order_items`, `orders`, `payments`, `pets`, `product_categories`, `products`, `profiles`, `services`, `vet_hours`, `vet_members`, `vets`
 - **Funciones:** `cancel_my_appointment`, `cancel_my_order`, `create_order`, `get_adoption_feed`, `handle_new_user`, `is_admin`, `is_vet_member`, `request_appointment`, `restore_stock_on_cancel`
-- **Políticas RLS (28):**
+- **Políticas RLS (29):**
   - `profiles_select_own ON profiles`
   - `profiles_update_own ON profiles`
   - `vets_select ON vets`
   - `vets_update_member ON vets`
   - `vets_admin_all ON vets`
-  - `vet_members_select ON vet_members`
+  - `Users can view their own vet memberships ON vet_members`
+  - `Admins can manage vet memberships ON vet_members`
   - `vet_hours_select   ON vet_hours`
-  - `vet_hours_manage   ON vet_hours`
-  - *... y 20 políticas más*
+  - *... y 21 políticas más*
 - **Triggers:** `on_auth_user_created`, `orders_restore_stock`
 
-### Archivo: [`supabase/seed.sql`](file:///supabase/seed.sql) (95 líneas)
+### Archivo: [`supabase/seed.sql`](file:///supabase/seed.sql) (101 líneas)
 
 ## 🧩 4. Catálogo de Componentes y Hooks Clave
 | Archivo | Componentes / Funciones | Hooks |
@@ -142,7 +147,7 @@
 ## 📁 5. Estructura Detallada de Archivos y Símbolos
 
 ### Project Root Config/Doc
-- [`.gitignore`](file:///.gitignore) — `8 líneas`
+- [`.gitignore`](file:///.gitignore) — `10 líneas`
 - [`README.md`](file:///README.md) — `88 líneas`
 - [`app.json`](file:///app.json) — `14 líneas` *(Expo app: Pet Delivery (slug: pet-delivery, scheme: petdelivery))*
 
@@ -167,7 +172,7 @@
 - [`package.json`](file:///package.json) — `38 líneas` *(npm pkg: pet-delivery-app v0.1.0 (20 deps, 2 devDeps))*
 
 ### Web Admin Core/Config
-- [`panel/.gitignore`](file:///panel/.gitignore) — `6 líneas`
+- [`panel/.gitignore`](file:///panel/.gitignore) — `8 líneas`
 - [`panel/.npmrc`](file:///panel/.npmrc) — `1 líneas`
 - [`panel/README.md`](file:///panel/README.md) — `70 líneas`
 - [`panel/next.config.ts`](file:///panel/next.config.ts) — `25 líneas`
@@ -175,10 +180,10 @@
 - [`panel/postcss.config.mjs`](file:///panel/postcss.config.mjs) — `2 líneas`
 
 ### Web Admin Panel (Next.js Page/Route)
-- [`panel/src/app/(admin)/admin/actions.ts`](file:///panel/src/app/(admin)/admin/actions.ts) — `91 líneas` *(comps: Optional; fns: addMember, createVet, removeMember, setCommission, setVetStatus)*
-- [`panel/src/app/(admin)/admin/nueva/page.tsx`](file:///panel/src/app/(admin)/admin/nueva/page.tsx) — `29 líneas`
-- [`panel/src/app/(admin)/admin/page.tsx`](file:///panel/src/app/(admin)/admin/page.tsx) — `149 líneas`
-- [`panel/src/app/(admin)/layout.tsx`](file:///panel/src/app/(admin)/layout.tsx) — `29 líneas`
+- [`panel/src/app/(admin)/admin/actions.ts`](file:///panel/src/app/(admin)/admin/actions.ts) — `364 líneas` *(comps: Optional; fns: addMember, createVet, deleteVet, removeMember, setCommission)*
+- [`panel/src/app/(admin)/admin/nueva/page.tsx`](file:///panel/src/app/(admin)/admin/nueva/page.tsx) — `34 líneas`
+- [`panel/src/app/(admin)/admin/page.tsx`](file:///panel/src/app/(admin)/admin/page.tsx) — `159 líneas`
+- [`panel/src/app/(admin)/layout.tsx`](file:///panel/src/app/(admin)/layout.tsx) — `27 líneas`
 - [`panel/src/app/(panel)/adopciones/[id]/page.tsx`](file:///panel/src/app/(panel)/adopciones/[id]/page.tsx) — `30 líneas`
 - [`panel/src/app/(panel)/adopciones/actions.ts`](file:///panel/src/app/(panel)/adopciones/actions.ts) — `174 líneas` *(fns: createListing, setListingStatus, updateListing, updateRequest)*
 - [`panel/src/app/(panel)/adopciones/nueva/page.tsx`](file:///panel/src/app/(panel)/adopciones/nueva/page.tsx) — `14 líneas`
@@ -188,7 +193,7 @@
 - [`panel/src/app/(panel)/citas/actions.ts`](file:///panel/src/app/(panel)/citas/actions.ts) — `57 líneas` *(fns: updateAppointment)*
 - [`panel/src/app/(panel)/citas/page.tsx`](file:///panel/src/app/(panel)/citas/page.tsx) — `113 líneas`
 - [`panel/src/app/(panel)/layout-actions.ts`](file:///panel/src/app/(panel)/layout-actions.ts) — `18 líneas` *(fns: switchActiveVet)*
-- [`panel/src/app/(panel)/layout.tsx`](file:///panel/src/app/(panel)/layout.tsx) — `83 líneas`
+- [`panel/src/app/(panel)/layout.tsx`](file:///panel/src/app/(panel)/layout.tsx) — `81 líneas`
 - [`panel/src/app/(panel)/page.tsx`](file:///panel/src/app/(panel)/page.tsx) — `68 líneas`
 - [`panel/src/app/(panel)/pedidos/actions.ts`](file:///panel/src/app/(panel)/pedidos/actions.ts) — `40 líneas` *(fns: updateOrder)*
 - [`panel/src/app/(panel)/pedidos/page.tsx`](file:///panel/src/app/(panel)/pedidos/page.tsx) — `104 líneas`
@@ -202,7 +207,7 @@
 - [`panel/src/app/(panel)/servicios/page.tsx`](file:///panel/src/app/(panel)/servicios/page.tsx) — `66 líneas`
 - [`panel/src/app/globals.css`](file:///panel/src/app/globals.css) — `16 líneas`
 - [`panel/src/app/layout.tsx`](file:///panel/src/app/layout.tsx) — `15 líneas` *(comps: RootLayout)*
-- [`panel/src/app/login/actions.ts`](file:///panel/src/app/login/actions.ts) — `23 líneas` *(fns: signIn, signOut)*
+- [`panel/src/app/login/actions.ts`](file:///panel/src/app/login/actions.ts) — `90 líneas` *(fns: signIn, signOut)*
 - [`panel/src/app/login/page.tsx`](file:///panel/src/app/login/page.tsx) — `29 líneas`
 - [`panel/src/app/sin-acceso/page.tsx`](file:///panel/src/app/sin-acceso/page.tsx) — `31 líneas`
 
@@ -215,19 +220,19 @@
 
 ### Web Admin Library/Service
 - [`panel/src/lib/admin-schemas.ts`](file:///panel/src/lib/admin-schemas.ts) — `26 líneas` *(types: AdminMember, AdminVet)*
-- [`panel/src/lib/auth.ts`](file:///panel/src/lib/auth.ts) — `74 líneas` *(fns: failTo, isAdminUser, requireAdmin, requireVet; types: Supabase, VetMembership)*
+- [`panel/src/lib/auth.ts`](file:///panel/src/lib/auth.ts) — `132 líneas` *(fns: failTo, isAdminUser, requireAdmin, requireVet; types: Supabase, VetMembership)*
 - [`panel/src/lib/format.ts`](file:///panel/src/lib/format.ts) — `45 líneas` *(fns: bogotaDayRange, bogotaMonthStart, errText, formatCOP, formatDate)*
 - [`panel/src/lib/schemas.ts`](file:///panel/src/lib/schemas.ts) — `109 líneas` *(types: AppointmentRow, ListingRow, OrderRow, ProductRow, RequestRow)*
 - [`panel/src/lib/status.ts`](file:///panel/src/lib/status.ts) — `49 líneas` *(fns: nextOrderStep)*
+- [`panel/src/lib/supabase/admin.ts`](file:///panel/src/lib/supabase/admin.ts) — `23 líneas` *(fns: getSupabaseAdmin)*
 - [`panel/src/lib/supabase/server.ts`](file:///panel/src/lib/supabase/server.ts) — `22 líneas` *(fns: createClient)*
 
 ### Web Admin Core/Config
 - [`panel/src/proxy.ts`](file:///panel/src/proxy.ts) — `43 líneas` *(fns: proxy)*
 - [`panel/tsconfig.json`](file:///panel/tsconfig.json) — `41 líneas`
-- [`panel/tsconfig.tsbuildinfo`](file:///panel/tsconfig.tsbuildinfo) — `1 líneas`
 
 ### Project Root Config/Doc
-- [`project_map.json`](file:///project_map.json) — `2091 líneas`
+- [`project_map.json`](file:///project_map.json) — `2110 líneas`
 - [`project_map.md`](file:///project_map.md) — `268 líneas`
 
 ### Mobile Component
@@ -253,10 +258,10 @@
 - [`src/theme.ts`](file:///src/theme.ts) — `21 líneas`
 
 ### Database & Backend (Supabase)
-- [`supabase/admin.sql`](file:///supabase/admin.sql) — `160 líneas` *(fns: admin_add_vet_member, admin_create_vet, admin_members, admin_remove_vet_member, admin_set_vet_commission)*
+- [`supabase/admin.sql`](file:///supabase/admin.sql) — `274 líneas` *(fns: admin_add_vet_member, admin_confirm_user_email, admin_create_vet, admin_delete_vet, admin_get_user_id_by_email)*
 - [`supabase/panel.sql`](file:///supabase/panel.sql) — `61 líneas`
-- [`supabase/schema.sql`](file:///supabase/schema.sql) — `597 líneas` *(fns: cancel_my_appointment, cancel_my_order, create_order, get_adoption_feed, handle_new_user; tables: adoption_listings, adoption_requests, adoption_swipes, appointments, order_items)*
-- [`supabase/seed.sql`](file:///supabase/seed.sql) — `95 líneas`
+- [`supabase/schema.sql`](file:///supabase/schema.sql) — `599 líneas` *(fns: cancel_my_appointment, cancel_my_order, create_order, get_adoption_feed, handle_new_user; tables: adoption_listings, adoption_requests, adoption_swipes, appointments, order_items)*
+- [`supabase/seed.sql`](file:///supabase/seed.sql) — `101 líneas`
 
 ### Developer Tools
 - [`tools/code_inspector.py`](file:///tools/code_inspector.py) — `633 líneas` *(fns: load_gitignore_patterns, main)*

@@ -2,15 +2,14 @@
   "root_directory": "C:\\Users\\maico\\OneDrive - Universidad Santo Tomás\\Escritorio\\pet-delivery_app",
   "statistics": {
     "total_files": 89,
-    "total_lines": 9176,
+    "total_lines": 9752,
     "by_extension": {
       "none": 3,
       ".md": 3,
       ".json": 6,
       ".tsx": 45,
-      ".ts": 24,
+      ".ts": 25,
       ".mjs": 1,
-      ".tsbuildinfo": 1,
       ".css": 1,
       ".sql": 4,
       ".py": 1
@@ -18,10 +17,10 @@
     "by_category": {
       "Project Root Config/Doc": 7,
       "Mobile App (Expo Router)": 15,
-      "Web Admin Core/Config": 9,
+      "Web Admin Core/Config": 8,
       "Web Admin Panel (Next.js Page/Route)": 30,
       "Web Admin Component": 5,
-      "Web Admin Library/Service": 6,
+      "Web Admin Library/Service": 7,
       "Mobile Core": 1,
       "Mobile Component": 4,
       "Mobile Hook": 2,
@@ -40,8 +39,8 @@
       "path": ".gitignore",
       "name": ".gitignore",
       "extension": "none",
-      "size_bytes": 78,
-      "line_count": 8,
+      "size_bytes": 96,
+      "line_count": 10,
       "category": "Project Root Config/Doc",
       "context": {}
     },
@@ -434,8 +433,8 @@
       "path": "panel/.gitignore",
       "name": ".gitignore",
       "extension": "none",
-      "size_bytes": 63,
-      "line_count": 6,
+      "size_bytes": 83,
+      "line_count": 8,
       "category": "Web Admin Core/Config",
       "context": {}
     },
@@ -513,8 +512,8 @@
       "path": "panel/src/app/(admin)/admin/actions.ts",
       "name": "actions.ts",
       "extension": ".ts",
-      "size_bytes": 4674,
-      "line_count": 91,
+      "size_bytes": 15914,
+      "line_count": 364,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [
@@ -524,9 +523,11 @@
         "functions": [
           "addMember",
           "createVet",
+          "deleteVet",
           "removeMember",
           "setCommission",
-          "setVetStatus"
+          "setVetStatus",
+          "toggleVetStatus"
         ],
         "types_interfaces": [],
         "classes": [],
@@ -539,8 +540,8 @@
       "path": "panel/src/app/(admin)/admin/nueva/page.tsx",
       "name": "page.tsx",
       "extension": ".tsx",
-      "size_bytes": 1638,
-      "line_count": 29,
+      "size_bytes": 1986,
+      "line_count": 34,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [],
@@ -559,8 +560,8 @@
       "path": "panel/src/app/(admin)/admin/page.tsx",
       "name": "page.tsx",
       "extension": ".tsx",
-      "size_bytes": 8310,
-      "line_count": 149,
+      "size_bytes": 8945,
+      "line_count": 159,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [],
@@ -579,8 +580,8 @@
       "path": "panel/src/app/(admin)/layout.tsx",
       "name": "layout.tsx",
       "extension": ".tsx",
-      "size_bytes": 1427,
-      "line_count": 29,
+      "size_bytes": 1254,
+      "line_count": 27,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [],
@@ -784,8 +785,8 @@
       "path": "panel/src/app/(panel)/layout.tsx",
       "name": "layout.tsx",
       "extension": ".tsx",
-      "size_bytes": 3592,
-      "line_count": 83,
+      "size_bytes": 3436,
+      "line_count": 81,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [],
@@ -1065,8 +1066,8 @@
       "path": "panel/src/app/login/actions.ts",
       "name": "actions.ts",
       "extension": ".ts",
-      "size_bytes": 880,
-      "line_count": 23,
+      "size_bytes": 2848,
+      "line_count": 90,
       "category": "Web Admin Panel (Next.js Page/Route)",
       "context": {
         "components": [],
@@ -1282,8 +1283,8 @@
       "path": "panel/src/lib/auth.ts",
       "name": "auth.ts",
       "extension": ".ts",
-      "size_bytes": 2698,
-      "line_count": 74,
+      "size_bytes": 4695,
+      "line_count": 132,
       "category": "Web Admin Library/Service",
       "context": {
         "components": [],
@@ -1408,6 +1409,28 @@
       }
     },
     {
+      "path": "panel/src/lib/supabase/admin.ts",
+      "name": "admin.ts",
+      "extension": ".ts",
+      "size_bytes": 773,
+      "line_count": 23,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "getSupabaseAdmin"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "getSupabaseAdmin"
+        ]
+      }
+    },
+    {
       "path": "panel/src/lib/supabase/server.ts",
       "name": "server.ts",
       "extension": ".ts",
@@ -1463,20 +1486,11 @@
       }
     },
     {
-      "path": "panel/tsconfig.tsbuildinfo",
-      "name": "tsconfig.tsbuildinfo",
-      "extension": ".tsbuildinfo",
-      "size_bytes": 236249,
-      "line_count": 1,
-      "category": "Web Admin Core/Config",
-      "context": {}
-    },
-    {
       "path": "project_map.json",
       "name": "project_map.json",
       "extension": ".json",
-      "size_bytes": 53676,
-      "line_count": 2091,
+      "size_bytes": 54194,
+      "line_count": 2110,
       "category": "Project Root Config/Doc",
       "context": {
         "summary": "",
@@ -1488,7 +1502,7 @@
       "path": "project_map.md",
       "name": "project_map.md",
       "extension": ".md",
-      "size_bytes": 21650,
+      "size_bytes": 21800,
       "line_count": 268,
       "category": "Project Root Config/Doc",
       "context": {
@@ -1905,14 +1919,18 @@
       "path": "supabase/admin.sql",
       "name": "admin.sql",
       "extension": ".sql",
-      "size_bytes": 8505,
-      "line_count": 160,
+      "size_bytes": 13670,
+      "line_count": 274,
       "category": "Database & Backend (Supabase)",
       "context": {
         "tables": [],
         "functions": [
           "admin_add_vet_member",
+          "admin_confirm_user_email",
           "admin_create_vet",
+          "admin_delete_vet",
+          "admin_get_user_id_by_email",
+          "admin_link_vet_member",
           "admin_members",
           "admin_remove_vet_member",
           "admin_set_vet_commission",
@@ -1923,7 +1941,12 @@
         "policies": [
           "products_select ON products",
           "services_select ON services",
-          "listings_select ON adoption_listings"
+          "listings_select ON adoption_listings",
+          "Users can view their own vet memberships ON vet_members",
+          "Admins can manage vet memberships ON vet_members",
+          "Users can view their own profile ON profiles",
+          "Admins can update profiles ON profiles",
+          "Admins can insert profiles ON profiles"
         ],
         "views": []
       }
@@ -1954,8 +1977,8 @@
       "path": "supabase/schema.sql",
       "name": "schema.sql",
       "extension": ".sql",
-      "size_bytes": 27718,
-      "line_count": 597,
+      "size_bytes": 27932,
+      "line_count": 599,
       "category": "Database & Backend (Supabase)",
       "context": {
         "tables": [
@@ -1996,7 +2019,8 @@
           "vets_select ON vets",
           "vets_update_member ON vets",
           "vets_admin_all ON vets",
-          "vet_members_select ON vet_members",
+          "Users can view their own vet memberships ON vet_members",
+          "Admins can manage vet memberships ON vet_members",
           "vet_hours_select   ON vet_hours",
           "vet_hours_manage   ON vet_hours",
           "pets_own ON pets",
@@ -2027,8 +2051,8 @@
       "path": "supabase/seed.sql",
       "name": "seed.sql",
       "extension": ".sql",
-      "size_bytes": 6576,
-      "line_count": 95,
+      "size_bytes": 7351,
+      "line_count": 101,
       "category": "Database & Backend (Supabase)",
       "context": {
         "tables": [],

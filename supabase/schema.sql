@@ -497,7 +497,9 @@ create policy vets_select on vets for select
 create policy vets_update_member on vets for update using (is_vet_member(id)) with check (is_vet_member(id));
 create policy vets_admin_all on vets for all using (is_admin()) with check (is_admin());
 
-create policy vet_members_select on vet_members for select using (user_id = auth.uid() or is_admin());
+create policy "Users can view their own vet memberships" on vet_members for select using (user_id = auth.uid() or is_admin());
+create policy "Admins can manage vet memberships"  on vet_members for all using (is_admin()) with check (is_admin());
+grant select, insert, update, delete on vet_members to authenticated;
 create policy vet_hours_select   on vet_hours for select using (true);
 create policy vet_hours_manage   on vet_hours for all using (is_vet_member(vet_id)) with check (is_vet_member(vet_id));
 

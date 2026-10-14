@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createClient } from '@/lib/supabase/server';
+import { getSupabaseAdmin } from '@/lib/supabase/admin';
 import { VetRow } from '@/lib/schemas';
 import { z } from 'zod';
 
@@ -22,15 +23,44 @@ export async function requireVet() {
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) redirect('/login');
 
+  let rawMembers: any = null;
   const { data, error } = await supabase
     .from('vet_members')
     .select(`member_role, vets(${VET_COLUMNS})`)
     .eq('user_id', auth.user.id);
-  if (error) throw new Error(error.message);
 
+  if (!error && data && data.length > 0) {
+    rawMembers = data;
+  } else {
+    // Si la consulta vino vacía con el cliente del usuario, consultar con Service Role si está disponible
+    const adminClient = getSupabaseAdmin();
+    if (adminClient) {
+      const { data: adminData } = await adminClient
+        .from('vet_members')
+        .select(`member_role, vets(${VET_COLUMNS})`)
+        .eq('user_id', auth.user.id);
+      if (adminData && adminData.length > 0) {
+        rawMembers = adminData;
+      }
+    }
+
+    // Fallback: si en la BD la columna se llama 'role' en lugar de 'member_role'
+    if (!rawMembers || rawMembers.length === 0) {
+      const client = getSupabaseAdmin() ?? supabase;
+      const { data: altData } = await client
+        .from('vet_members')
+        .select(`role, vets(${VET_COLUMNS})`)
+        .eq('user_id', auth.user.id);
+      if (altData && altData.length > 0) {
+        rawMembers = altData.map((r: any) => ({ ...r, member_role: r.role }));
+      }
+    }
+  }
+
+  const validRows = (rawMembers ?? []).filter((r: any) => r && r.vets);
   const memberships = z
     .array(z.object({ member_role: z.enum(['owner', 'staff']), vets: VetRow }))
-    .parse(data);
+    .parse(validRows);
 
   if (!memberships.length) {
     redirect((await isAdminUser(supabase)) ? '/admin' : '/sin-acceso');
@@ -58,17 +88,45 @@ export function failTo(path: string, message: string): never {
 
 type Supabase = Awaited<ReturnType<typeof createClient>>;
 
-/** ¿El usuario actual es administrador de la plataforma? (la función is_admin() vive en la BD) */
+/** ¿El usuario actual es administrador de la plataforma? Valida RPC is_admin() y directamente profiles.role = 'admin' */
 export async function isAdminUser(supabase: Supabase): Promise<boolean> {
-  const { data } = await supabase.rpc('is_admin');
-  return data === true;
+  const { data: rpcData, error } = await supabase.rpc('is_admin');
+  if (!error && typeof rpcData === 'boolean') {
+    return rpcData;
+  }
+  // Validación directa en profiles.role = 'admin'
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return false;
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', auth.user.id)
+    .single();
+  return profile?.role === 'admin';
 }
 
-/** Exige sesión y rol de administrador; si no, vuelve al inicio. */
+/**
+ * Guardián dedicado para /admin.
+ * Exige sesión activa y valida directamente profiles.role = 'admin'.
+ * Totalmente independiente de vet_members (no requiere pertenecer a una veterinaria ni elegir sede).
+ * Si no es admin: redirige a '/' si tiene veterinaria asociada, o a '/sin-acceso'.
+ */
 export async function requireAdmin() {
   const supabase = await createClient();
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) redirect('/login');
-  if (!(await isAdminUser(supabase))) redirect('/');
+
+  const isAdmin = await isAdminUser(supabase);
+  if (!isAdmin) {
+    const { count } = await supabase
+      .from('vet_members')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', auth.user.id);
+    if (count && count > 0) {
+      redirect('/');
+    }
+    redirect('/sin-acceso');
+  }
+
   return { supabase, user: auth.user };
 }

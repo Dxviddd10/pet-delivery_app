@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { NavLink } from '@/components/NavLink';
 import { SubmitButton } from '@/components/SubmitButton';
 import { btnSecondary } from '@/components/ui';
@@ -14,7 +13,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <nav className="flex gap-1 overflow-x-auto md:flex-col">
           <NavLink href="/admin" exact>🏥 Veterinarias</NavLink>
           <NavLink href="/admin/nueva" exact>➕ Nueva veterinaria</NavLink>
-          <Link href="/" className="block rounded-xl px-3 py-2 text-sm font-semibold hover:bg-orange-100">↩︎ Panel de veterinaria</Link>
         </nav>
         <div className="mt-6 hidden text-xs text-muted md:block">
           <div className="truncate">{user.email}</div>

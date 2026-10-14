@@ -1,7 +1,7 @@
 import { NavLink } from '@/components/NavLink';
 import { SubmitButton } from '@/components/SubmitButton';
 import { Badge, btnSecondary, inputClass } from '@/components/ui';
-import { isAdminUser, requireVet } from '@/lib/auth';
+import { requireVet } from '@/lib/auth';
 import { signOut } from '@/app/login/actions';
 import { switchActiveVet } from './layout-actions';
 
@@ -16,8 +16,7 @@ const links = [
 ];
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
-  const { vet, user, supabase, memberships } = await requireVet();
-  const isAdmin = await isAdminUser(supabase);
+  const { vet, user, memberships } = await requireVet();
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
@@ -61,7 +60,6 @@ export default async function PanelLayout({ children }: { children: React.ReactN
           {links.map((l) => (
             <NavLink key={l.href} href={l.href}>{l.label}</NavLink>
           ))}
-          {isAdmin ? <NavLink href="/admin">🛡️ Administración</NavLink> : null}
         </nav>
         <div className="mt-6 hidden text-xs text-muted md:block">
           <div className="truncate font-medium">{user.email}</div>

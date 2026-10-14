@@ -60,36 +60,42 @@ declare
   v_hunza_user   uuid;
   v_admin_user   uuid;
 begin
-  -- 1) Patitas Tunja
+  -- 1) Patitas Tunja -> patitas@petdelivery.co
   select id into v_patitas_user from auth.users where lower(email) = 'patitas@petdelivery.co';
   if v_patitas_user is not null then
     insert into vet_members (vet_id, user_id, member_role)
     values ('11111111-1111-1111-1111-111111111111', v_patitas_user, 'owner')
     on conflict (vet_id, user_id) do update set member_role = 'owner';
-    update profiles set role = 'vet_staff' where id = v_patitas_user;
+    update profiles set role = 'vet_staff', full_name = coalesce(nullif(full_name, ''), 'Dr. Patitas') where id = v_patitas_user;
   end if;
 
-  -- 2) Boyacá Pets
+  -- 2) Boyacá Pets -> boyaca@petdelivery.co
   select id into v_boyaca_user from auth.users where lower(email) = 'boyaca@petdelivery.co';
   if v_boyaca_user is not null then
     insert into vet_members (vet_id, user_id, member_role)
     values ('22222222-2222-2222-2222-222222222222', v_boyaca_user, 'owner')
     on conflict (vet_id, user_id) do update set member_role = 'owner';
-    update profiles set role = 'vet_staff' where id = v_boyaca_user;
+    update profiles set role = 'vet_staff', full_name = coalesce(nullif(full_name, ''), 'Dra. Boyacá Pets') where id = v_boyaca_user;
   end if;
 
-  -- 3) PetShop Hunza
+  -- 3) PetShop Hunza -> hunza@petdelivery.co
   select id into v_hunza_user from auth.users where lower(email) = 'hunza@petdelivery.co';
   if v_hunza_user is not null then
     insert into vet_members (vet_id, user_id, member_role)
     values ('33333333-3333-3333-3333-333333333333', v_hunza_user, 'owner')
     on conflict (vet_id, user_id) do update set member_role = 'owner';
-    update profiles set role = 'vet_staff' where id = v_hunza_user;
+    update profiles set role = 'vet_staff', full_name = coalesce(nullif(full_name, ''), 'Gerente Hunza') where id = v_hunza_user;
   end if;
 
-  -- 4) Administrador de plataforma
+  -- 4) Administrador de plataforma (Super Admin global)
+  -- El Super Admin solo administra la plataforma desde /admin y NO debe pertenecer a ninguna veterinaria.
   select id into v_admin_user from auth.users where lower(email) = 'admin@petdelivery.co';
   if v_admin_user is not null then
-    update profiles set role = 'admin' where id = v_admin_user;
+    update profiles set role = 'admin', full_name = coalesce(nullif(full_name, ''), 'Super Administrador') where id = v_admin_user;
+    -- Desvincular de vet_members en caso de haber quedado asignado previamente
+    delete from vet_members where user_id = v_admin_user;
   end if;
+
+  -- Limpieza de seguridad: ningún usuario con rol 'admin' debe estar en vet_members
+  delete from vet_members where user_id in (select id from profiles where role = 'admin');
 end $$;

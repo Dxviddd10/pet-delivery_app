@@ -287,6 +287,7 @@ create or replace function request_appointment(
 language plpgsql security definer set search_path = public as $$
 declare
   v_vet vets; v_service services; v_row appointments; v_fee int := 0;
+  v_dow smallint; v_time time;
 begin
   if auth.uid() is null then raise exception 'No autenticado'; end if;
 
@@ -303,6 +304,32 @@ begin
 
   if p_scheduled_at < now() + interval '1 hour' then
     raise exception 'La cita debe ser al menos 1 hora a futuro';
+  end if;
+
+  -- SEC-08: Validación de horario operativo de la veterinaria (Hora de Colombia UTC-5)
+  v_dow := extract(dow from p_scheduled_at at time zone 'America/Bogota')::smallint;
+  v_time := (p_scheduled_at at time zone 'America/Bogota')::time;
+  if exists (select 1 from vet_hours where vet_id = p_vet_id) then
+    if not exists (
+      select 1 from vet_hours
+       where vet_id = p_vet_id
+         and weekday = v_dow
+         and v_time >= open_time
+         and v_time + (v_service.duration_min || ' minutes')::interval <= close_time
+    ) then
+      raise exception 'La veterinaria está cerrada en el horario solicitado';
+    end if;
+  end if;
+
+  -- SEC-08: Prevención de solapamiento de citas (Double Booking)
+  if exists (
+    select 1 from appointments
+     where vet_id = p_vet_id
+       and status in ('requested', 'confirmed', 'rescheduled')
+       and scheduled_at < p_scheduled_at + (v_service.duration_min || ' minutes')::interval
+       and scheduled_at + (duration_min || ' minutes')::interval > p_scheduled_at
+  ) then
+    raise exception 'Ese horario ya no está disponible para una cita';
   end if;
 
   if p_mode = 'home' then
@@ -408,10 +435,16 @@ create or replace function cancel_my_order(p_order_id uuid) returns orders
 language plpgsql security definer set search_path = public as $$
 declare v_row orders;
 begin
+  -- SEC-07: Solo permite cancelar órdenes recién creadas ('placed') que no hayan sido pagadas
   update orders set status = 'cancelled'
-   where id = p_order_id and user_id = auth.uid() and status in ('placed', 'confirmed')
+   where id = p_order_id
+     and user_id = auth.uid()
+     and status in ('placed')
+     and payment_status <> 'paid'
    returning * into v_row;
-  if not found then raise exception 'Este pedido ya no se puede cancelar'; end if;
+  if not found then
+    raise exception 'Este pedido ya no se puede cancelar (ya está confirmado, en camino o fue pagado)';
+  end if;
   return v_row;
 end $$;
 
@@ -420,10 +453,17 @@ returns appointments
 language plpgsql security definer set search_path = public as $$
 declare v_row appointments;
 begin
+  -- SEC-07: Solo permite cancelar citas con al menos 2 horas de anticipación y no pagadas
   update appointments set status = 'cancelled', cancel_reason = p_reason
-   where id = p_id and user_id = auth.uid() and status in ('requested', 'confirmed', 'rescheduled')
+   where id = p_id
+     and user_id = auth.uid()
+     and status in ('requested', 'confirmed', 'rescheduled')
+     and scheduled_at > now() + interval '2 hours'
+     and payment_status <> 'paid'
    returning * into v_row;
-  if not found then raise exception 'Esta cita ya no se puede cancelar'; end if;
+  if not found then
+    raise exception 'Esta cita ya no se puede cancelar (debe ser con al menos 2 horas de anticipación y no estar pagada)';
+  end if;
   return v_row;
 end $$;
 
@@ -473,7 +513,16 @@ create policy listings_manage on adoption_listings for all
 create policy swipes_own on adoption_swipes for all
   using (user_id = auth.uid()) with check (user_id = auth.uid());
 
-create policy requests_insert_own on adoption_requests for insert with check (user_id = auth.uid());
+-- SEC-01: Evita auto-aprobación y postulaciones a listings no publicados o de veterinarias inactivas
+create policy requests_insert_own on adoption_requests for insert with check (
+  user_id = auth.uid()
+  and status = 'pending'
+  and exists (
+    select 1 from adoption_listings l
+    join vets v on v.id = l.vet_id and v.status = 'active'
+    where l.id = listing_id and l.status = 'published'
+  )
+);
 create policy requests_select on adoption_requests for select using (
   user_id = auth.uid() or is_admin()
   or exists (select 1 from adoption_listings l where l.id = listing_id and is_vet_member(l.vet_id)));
@@ -520,3 +569,29 @@ grant execute on function create_order(uuid, jsonb, delivery_mode, text, payment
 grant execute on function cancel_my_order(uuid) to authenticated;
 grant execute on function cancel_my_appointment(uuid, text) to authenticated;
 grant execute on function get_adoption_feed(species_type, int) to authenticated;
+
+-- ============================================================
+-- SEC-02 & SEC-03: Restricciones de permisos por columna (Defensa en profundidad)
+-- ============================================================
+-- 1) Los miembros de veterinaria solo pueden modificar columnas operativas (no comisiones, estado ni totales)
+revoke update on vets from authenticated;
+grant update (name, description, logo_url, cover_url, phone, whatsapp, address, lat, lng,
+              offers_home_visits, home_fee, delivery_fee) on vets to authenticated;
+
+revoke update on orders from authenticated;
+grant update (status, payment_status, notes) on orders to authenticated;
+
+revoke update on appointments from authenticated;
+grant update (status, payment_status, scheduled_at, cancel_reason) on appointments to authenticated;
+
+revoke update on adoption_requests from authenticated;
+grant update (status, vet_notes) on adoption_requests to authenticated;
+
+-- 2) Los usuarios solo pueden actualizar su información básica (previene escalada de role = 'admin')
+revoke update on profiles from authenticated;
+grant update (full_name, phone, avatar_url, city, push_token) on profiles to authenticated;
+
+-- 3) Prohibir cualquier modificación de datos desde rol anónimo (anon)
+revoke insert, update, delete on profiles, vets, vet_members, vet_hours, pets,
+  adoption_listings, adoption_swipes, adoption_requests, services, appointments,
+  product_categories, products, orders, order_items, payments from anon;

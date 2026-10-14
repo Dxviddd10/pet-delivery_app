@@ -1,0 +1,2091 @@
+{
+  "root_directory": "C:\\Users\\maico\\OneDrive - Universidad Santo Tomás\\Escritorio\\pet-delivery_app",
+  "statistics": {
+    "total_files": 89,
+    "total_lines": 9176,
+    "by_extension": {
+      "none": 3,
+      ".md": 3,
+      ".json": 6,
+      ".tsx": 45,
+      ".ts": 24,
+      ".mjs": 1,
+      ".tsbuildinfo": 1,
+      ".css": 1,
+      ".sql": 4,
+      ".py": 1
+    },
+    "by_category": {
+      "Project Root Config/Doc": 7,
+      "Mobile App (Expo Router)": 15,
+      "Web Admin Core/Config": 9,
+      "Web Admin Panel (Next.js Page/Route)": 30,
+      "Web Admin Component": 5,
+      "Web Admin Library/Service": 6,
+      "Mobile Core": 1,
+      "Mobile Component": 4,
+      "Mobile Hook": 2,
+      "Mobile Library/Service": 3,
+      "Mobile Provider": 2,
+      "Database & Backend (Supabase)": 4,
+      "Developer Tools": 1
+    },
+    "components_count": 49,
+    "hooks_count": 20,
+    "routes_count": 35,
+    "sql_tables_count": 15
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "name": ".gitignore",
+      "extension": "none",
+      "size_bytes": 78,
+      "line_count": 8,
+      "category": "Project Root Config/Doc",
+      "context": {}
+    },
+    {
+      "path": "README.md",
+      "name": "README.md",
+      "extension": ".md",
+      "size_bytes": 4525,
+      "line_count": 88,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "headings": [
+          "Pet Delivery · App móvil (MVP Fase 1)",
+          "Qué incluye",
+          "Puesta en marcha",
+          "Estructura"
+        ]
+      }
+    },
+    {
+      "path": "app.json",
+      "name": "app.json",
+      "extension": ".json",
+      "size_bytes": 419,
+      "line_count": 14,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "summary": "Expo app: Pet Delivery (slug: pet-delivery, scheme: petdelivery)",
+        "scripts": [],
+        "dependencies_count": 0
+      }
+    },
+    {
+      "path": "app/(auth)/_layout.tsx",
+      "name": "_layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 143,
+      "line_count": 5,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "AuthLayout"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(auth)/_layout"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(auth)/login.tsx",
+      "name": "login.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2407,
+      "line_count": 55,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "LoginScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Values"
+        ],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(auth)/login"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(auth)/register.tsx",
+      "name": "register.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3344,
+      "line_count": 65,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "RegisterScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Values"
+        ],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(auth)/register"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/_layout.tsx",
+      "name": "_layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1572,
+      "line_count": 40,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "TabsLayout"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)/_layout"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/activity.tsx",
+      "name": "activity.tsx",
+      "extension": ".tsx",
+      "size_bytes": 6831,
+      "line_count": 144,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "ActivityScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Tab"
+        ],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)/activity"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/index.tsx",
+      "name": "index.tsx",
+      "extension": ".tsx",
+      "size_bytes": 5459,
+      "line_count": 136,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "AdoptFeedScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/profile.tsx",
+      "name": "profile.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2630,
+      "line_count": 56,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "ProfileScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)/profile"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/shop.tsx",
+      "name": "shop.tsx",
+      "extension": ".tsx",
+      "size_bytes": 5739,
+      "line_count": 123,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "ShopScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)/shop"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/(tabs)/vets.tsx",
+      "name": "vets.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1899,
+      "line_count": 46,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "VetsScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /(tabs)/vets"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/_layout.tsx",
+      "name": "_layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2393,
+      "line_count": 61,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "RootLayout"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /_layout"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/adoption/[id].tsx",
+      "name": "[id].tsx",
+      "extension": ".tsx",
+      "size_bytes": 3652,
+      "line_count": 84,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "AdoptionRoute"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /adoption/[id]"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/book/[vetId].tsx",
+      "name": "[vetId].tsx",
+      "extension": ".tsx",
+      "size_bytes": 9715,
+      "line_count": 200,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "BookRoute"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /book/[vetId]"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/cart.tsx",
+      "name": "cart.tsx",
+      "extension": ".tsx",
+      "size_bytes": 7028,
+      "line_count": 134,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "CartScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /cart"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/pet/new.tsx",
+      "name": "new.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3171,
+      "line_count": 66,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "NewPetScreen"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Values"
+        ],
+        "classes": [],
+        "routes": [
+          "Expo Route: /pet/new"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "app/vet/[id].tsx",
+      "name": "[id].tsx",
+      "extension": ".tsx",
+      "size_bytes": 4234,
+      "line_count": 91,
+      "category": "Mobile App (Expo Router)",
+      "context": {
+        "components": [
+          "VetDetailRoute"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Expo Route: /vet/[id]"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "package.json",
+      "name": "package.json",
+      "extension": ".json",
+      "size_bytes": 1107,
+      "line_count": 38,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "summary": "npm pkg: pet-delivery-app v0.1.0 (20 deps, 2 devDeps)",
+        "scripts": [
+          "start",
+          "android",
+          "ios",
+          "typecheck"
+        ],
+        "dependencies_count": 22
+      }
+    },
+    {
+      "path": "panel/.gitignore",
+      "name": ".gitignore",
+      "extension": "none",
+      "size_bytes": 63,
+      "line_count": 6,
+      "category": "Web Admin Core/Config",
+      "context": {}
+    },
+    {
+      "path": "panel/.npmrc",
+      "name": ".npmrc",
+      "extension": "none",
+      "size_bytes": 23,
+      "line_count": 1,
+      "category": "Web Admin Core/Config",
+      "context": {}
+    },
+    {
+      "path": "panel/README.md",
+      "name": "README.md",
+      "extension": ".md",
+      "size_bytes": 3585,
+      "line_count": 70,
+      "category": "Web Admin Core/Config",
+      "context": {
+        "headings": [
+          "Pet Delivery · Panel web para veterinarias",
+          "Módulos",
+          "Puesta en marcha",
+          "Notas técnicas"
+        ]
+      }
+    },
+    {
+      "path": "panel/next.config.ts",
+      "name": "next.config.ts",
+      "extension": ".ts",
+      "size_bytes": 839,
+      "line_count": 25,
+      "category": "Web Admin Core/Config",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/package.json",
+      "name": "package.json",
+      "extension": ".json",
+      "size_bytes": 670,
+      "line_count": 28,
+      "category": "Web Admin Core/Config",
+      "context": {
+        "summary": "npm pkg: pet-delivery-panel v0.1.0 (6 deps, 7 devDeps)",
+        "scripts": [
+          "dev",
+          "build",
+          "start",
+          "typecheck"
+        ],
+        "dependencies_count": 13
+      }
+    },
+    {
+      "path": "panel/postcss.config.mjs",
+      "name": "postcss.config.mjs",
+      "extension": ".mjs",
+      "size_bytes": 85,
+      "line_count": 2,
+      "category": "Web Admin Core/Config",
+      "context": {}
+    },
+    {
+      "path": "panel/src/app/(admin)/admin/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 4674,
+      "line_count": 91,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [
+          "Optional"
+        ],
+        "hooks": [],
+        "functions": [
+          "addMember",
+          "createVet",
+          "removeMember",
+          "setCommission",
+          "setVetStatus"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(admin)/admin/nueva/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1638,
+      "line_count": 29,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(admin)/admin/nueva"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(admin)/admin/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 8310,
+      "line_count": 149,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(admin)/admin"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(admin)/layout.tsx",
+      "name": "layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1427,
+      "line_count": 29,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Layout: /(admin)"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/adopciones/[id]/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1167,
+      "line_count": 30,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/adopciones/[id]"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/adopciones/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 7847,
+      "line_count": 174,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "createListing",
+          "setListingStatus",
+          "updateListing",
+          "updateRequest"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/adopciones/nueva/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 576,
+      "line_count": 14,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/adopciones/nueva"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/adopciones/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 7237,
+      "line_count": 135,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Sb"
+        ],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/adopciones"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/ajustes/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 1792,
+      "line_count": 36,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "saveSettings"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/ajustes/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3174,
+      "line_count": 53,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/ajustes"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/citas/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 2398,
+      "line_count": 57,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "updateAppointment"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/citas/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 6142,
+      "line_count": 113,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/citas"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/layout-actions.ts",
+      "name": "layout-actions.ts",
+      "extension": ".ts",
+      "size_bytes": 601,
+      "line_count": 18,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "switchActiveVet"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/layout.tsx",
+      "name": "layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3592,
+      "line_count": 83,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Layout: /(panel)"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3693,
+      "line_count": 68,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/pedidos/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 1778,
+      "line_count": 40,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "updateOrder"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/pedidos/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 5406,
+      "line_count": 104,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/pedidos"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/[id]/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1089,
+      "line_count": 27,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/productos/[id]"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 8277,
+      "line_count": 181,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "createProduct",
+          "importProducts",
+          "quickUpdateProduct",
+          "toggleProduct",
+          "updateProduct"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/importar/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1711,
+      "line_count": 30,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/productos/importar"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/nuevo/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 489,
+      "line_count": 14,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/productos/nuevo"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3883,
+      "line_count": 76,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/productos"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/productos/plantilla/route.ts",
+      "name": "route.ts",
+      "extension": ".ts",
+      "size_bytes": 513,
+      "line_count": 13,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [
+          "GET"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js API Route: /(panel)/productos/plantilla"
+        ],
+        "is_server_action": false,
+        "exports": [
+          "GET"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/servicios/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 1783,
+      "line_count": 41,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "saveService"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/(panel)/servicios/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 4055,
+      "line_count": 66,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /(panel)/servicios"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/globals.css",
+      "name": "globals.css",
+      "extension": ".css",
+      "size_bytes": 353,
+      "line_count": 16,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {}
+    },
+    {
+      "path": "panel/src/app/layout.tsx",
+      "name": "layout.tsx",
+      "extension": ".tsx",
+      "size_bytes": 458,
+      "line_count": 15,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [
+          "RootLayout"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Layout: /layout.tsx"
+        ],
+        "is_server_action": false,
+        "exports": [
+          "metadata"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/app/login/actions.ts",
+      "name": "actions.ts",
+      "extension": ".ts",
+      "size_bytes": 880,
+      "line_count": 23,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "signIn",
+          "signOut"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": true,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/login/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1397,
+      "line_count": 29,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /login"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/app/sin-acceso/page.tsx",
+      "name": "page.tsx",
+      "extension": ".tsx",
+      "size_bytes": 1353,
+      "line_count": 31,
+      "category": "Web Admin Panel (Next.js Page/Route)",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [
+          "Next.js Page: /sin-acceso"
+        ],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/components/ListingForm.tsx",
+      "name": "ListingForm.tsx",
+      "extension": ".tsx",
+      "size_bytes": 4374,
+      "line_count": 83,
+      "category": "Web Admin Component",
+      "context": {
+        "components": [
+          "ListingForm"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Props"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "ListingForm"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/components/NavLink.tsx",
+      "name": "NavLink.tsx",
+      "extension": ".tsx",
+      "size_bytes": 590,
+      "line_count": 18,
+      "category": "Web Admin Component",
+      "context": {
+        "components": [
+          "NavLink"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "NavLink"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/components/ProductForm.tsx",
+      "name": "ProductForm.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2333,
+      "line_count": 40,
+      "category": "Web Admin Component",
+      "context": {
+        "components": [
+          "ProductForm"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "ProductForm",
+          "kindOptions"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/components/SubmitButton.tsx",
+      "name": "SubmitButton.tsx",
+      "extension": ".tsx",
+      "size_bytes": 554,
+      "line_count": 20,
+      "category": "Web Admin Component",
+      "context": {
+        "components": [
+          "SubmitButton"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "SubmitButton"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/components/ui.tsx",
+      "name": "ui.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2999,
+      "line_count": 72,
+      "category": "Web Admin Component",
+      "context": {
+        "components": [
+          "Badge",
+          "Card",
+          "Empty",
+          "ErrorBanner",
+          "Field",
+          "OkBanner",
+          "PageHeader"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "Tone"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "Badge",
+          "Card",
+          "Empty",
+          "ErrorBanner",
+          "Field",
+          "OkBanner",
+          "PageHeader",
+          "btnDanger",
+          "btnPrimary",
+          "btnSecondary",
+          "inputClass"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/admin-schemas.ts",
+      "name": "admin-schemas.ts",
+      "extension": ".ts",
+      "size_bytes": 750,
+      "line_count": 26,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "AdminMember",
+          "AdminVet"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "AdminMember",
+          "AdminVet",
+          "MONTH_RE"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/auth.ts",
+      "name": "auth.ts",
+      "extension": ".ts",
+      "size_bytes": 2698,
+      "line_count": 74,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "failTo",
+          "isAdminUser",
+          "requireAdmin",
+          "requireVet"
+        ],
+        "types_interfaces": [
+          "Supabase",
+          "VetMembership"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "failTo"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/format.ts",
+      "name": "format.ts",
+      "extension": ".ts",
+      "size_bytes": 1965,
+      "line_count": 45,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "bogotaDayRange",
+          "bogotaMonthStart",
+          "errText",
+          "formatCOP",
+          "formatDate",
+          "formatDateTime",
+          "fromBogotaInput",
+          "toBogotaInput"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "bogotaDayRange",
+          "bogotaMonthStart",
+          "errText",
+          "formatCOP",
+          "formatDate",
+          "formatDateTime",
+          "fromBogotaInput",
+          "speciesLabel",
+          "toBogotaInput"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/schemas.ts",
+      "name": "schemas.ts",
+      "extension": ".ts",
+      "size_bytes": 3762,
+      "line_count": 109,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "AppointmentRow",
+          "ListingRow",
+          "OrderRow",
+          "ProductRow",
+          "RequestRow",
+          "ServiceRow",
+          "VetRow"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "AppointmentRow",
+          "Customer",
+          "ListingRow",
+          "OrderRow",
+          "ProductRow",
+          "RequestRow",
+          "ServiceRow",
+          "Uuid",
+          "VetRow"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/status.ts",
+      "name": "status.ts",
+      "extension": ".ts",
+      "size_bytes": 2410,
+      "line_count": 49,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "nextOrderStep"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "apptStatus",
+          "listingStatus",
+          "nextOrderStep",
+          "orderStatus",
+          "paymentMethodLabel",
+          "paymentStatusLabel",
+          "requestStatus"
+        ]
+      }
+    },
+    {
+      "path": "panel/src/lib/supabase/server.ts",
+      "name": "server.ts",
+      "extension": ".ts",
+      "size_bytes": 668,
+      "line_count": 22,
+      "category": "Web Admin Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "createClient"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": []
+      }
+    },
+    {
+      "path": "panel/src/proxy.ts",
+      "name": "proxy.ts",
+      "extension": ".ts",
+      "size_bytes": 1394,
+      "line_count": 43,
+      "category": "Web Admin Core/Config",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "proxy"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "config"
+        ]
+      }
+    },
+    {
+      "path": "panel/tsconfig.json",
+      "name": "tsconfig.json",
+      "extension": ".json",
+      "size_bytes": 744,
+      "line_count": 41,
+      "category": "Web Admin Core/Config",
+      "context": {
+        "summary": "",
+        "scripts": [],
+        "dependencies_count": 0
+      }
+    },
+    {
+      "path": "panel/tsconfig.tsbuildinfo",
+      "name": "tsconfig.tsbuildinfo",
+      "extension": ".tsbuildinfo",
+      "size_bytes": 236249,
+      "line_count": 1,
+      "category": "Web Admin Core/Config",
+      "context": {}
+    },
+    {
+      "path": "project_map.json",
+      "name": "project_map.json",
+      "extension": ".json",
+      "size_bytes": 53676,
+      "line_count": 2091,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "summary": "",
+        "scripts": [],
+        "dependencies_count": 0
+      }
+    },
+    {
+      "path": "project_map.md",
+      "name": "project_map.md",
+      "extension": ".md",
+      "size_bytes": 21650,
+      "line_count": 268,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "headings": [
+          "🗺️ Mapa de Arquitectura y Referencia del Proyecto",
+          "📊 1. Resumen General del Repositorio",
+          "🧭 2. Mapa de Rutas y Pantallas",
+          "🗄️ 3. Modelo de Datos y Backend (Supabase SQL)"
+        ]
+      }
+    },
+    {
+      "path": "src/components/PetCard.tsx",
+      "name": "PetCard.tsx",
+      "extension": ".tsx",
+      "size_bytes": 4239,
+      "line_count": 88,
+      "category": "Mobile Component",
+      "context": {
+        "components": [
+          "PetCard"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "PetCard"
+        ]
+      }
+    },
+    {
+      "path": "src/components/SwipeDeck.tsx",
+      "name": "SwipeDeck.tsx",
+      "extension": ".tsx",
+      "size_bytes": 6137,
+      "line_count": 138,
+      "category": "Mobile Component",
+      "context": {
+        "components": [
+          "SwipeDeck"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "SwipeDirection"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "SwipeDeck"
+        ]
+      }
+    },
+    {
+      "path": "src/components/extras.tsx",
+      "name": "extras.tsx",
+      "extension": ".tsx",
+      "size_bytes": 3260,
+      "line_count": 82,
+      "category": "Mobile Component",
+      "context": {
+        "components": [
+          "Footer",
+          "OptionTile",
+          "PricePill"
+        ],
+        "hooks": [],
+        "functions": [
+          "productTile"
+        ],
+        "types_interfaces": [
+          "TileProps"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "Footer",
+          "OptionTile",
+          "PricePill",
+          "productTile"
+        ]
+      }
+    },
+    {
+      "path": "src/components/ui.tsx",
+      "name": "ui.tsx",
+      "extension": ".tsx",
+      "size_bytes": 10322,
+      "line_count": 242,
+      "category": "Mobile Component",
+      "context": {
+        "components": [
+          "AuthShell",
+          "Avatar",
+          "Badge",
+          "Button",
+          "Card",
+          "Chip",
+          "ChipRow",
+          "EmptyState",
+          "ErrorState",
+          "Loading",
+          "Row",
+          "Screen",
+          "SectionTitle"
+        ],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "ButtonProps",
+          "FieldProps"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "AuthShell",
+          "Avatar",
+          "Badge",
+          "Button",
+          "Card",
+          "Chip",
+          "ChipRow",
+          "EmptyState",
+          "ErrorState",
+          "Loading",
+          "Row",
+          "Screen",
+          "SectionTitle",
+          "TextField",
+          "styles"
+        ]
+      }
+    },
+    {
+      "path": "src/hooks/queries.ts",
+      "name": "queries.ts",
+      "extension": ".ts",
+      "size_bytes": 10549,
+      "line_count": 328,
+      "category": "Mobile Hook",
+      "context": {
+        "components": [],
+        "hooks": [
+          "useAdoptionFeed",
+          "useCancelAppointment",
+          "useCancelOrder",
+          "useCreateOrder",
+          "useCreatePet",
+          "useListing",
+          "useMyAdoptionRequests",
+          "useMyAppointments",
+          "useMyOrders",
+          "useMyPets",
+          "useProducts",
+          "useRequestAdoption",
+          "useRequestAppointment",
+          "useServices",
+          "useSwipe",
+          "useVet",
+          "useVets"
+        ],
+        "functions": [
+          "useAdoptionFeed",
+          "useCancelAppointment",
+          "useCancelOrder",
+          "useCreateOrder",
+          "useCreatePet",
+          "useListing",
+          "useMyAdoptionRequests",
+          "useMyAppointments",
+          "useMyOrders",
+          "useMyPets",
+          "useProducts",
+          "useRequestAdoption",
+          "useRequestAppointment",
+          "useServices",
+          "useSwipe",
+          "useVet",
+          "useVets"
+        ],
+        "types_interfaces": [
+          "AdoptionRequestInput",
+          "AppointmentInput",
+          "NewPetInput",
+          "OrderInput"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "useAdoptionFeed",
+          "useCancelAppointment",
+          "useCancelOrder",
+          "useCreateOrder",
+          "useCreatePet",
+          "useListing",
+          "useMyAdoptionRequests",
+          "useMyAppointments",
+          "useMyOrders",
+          "useMyPets",
+          "useProducts",
+          "useRequestAdoption",
+          "useRequestAppointment",
+          "useServices",
+          "useSwipe",
+          "useVet",
+          "useVets"
+        ]
+      }
+    },
+    {
+      "path": "src/hooks/useDebounced.ts",
+      "name": "useDebounced.ts",
+      "extension": ".ts",
+      "size_bytes": 327,
+      "line_count": 10,
+      "category": "Mobile Hook",
+      "context": {
+        "components": [],
+        "hooks": [
+          "useDebounced"
+        ],
+        "functions": [
+          "useDebounced"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "useDebounced"
+        ]
+      }
+    },
+    {
+      "path": "src/lib/format.ts",
+      "name": "format.ts",
+      "extension": ".ts",
+      "size_bytes": 1311,
+      "line_count": 30,
+      "category": "Mobile Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [
+          "errMsg",
+          "formatAge",
+          "formatCOP",
+          "formatDateTime"
+        ],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "errMsg",
+          "formatAge",
+          "formatCOP",
+          "formatDateTime",
+          "speciesEmoji",
+          "speciesLabel"
+        ]
+      }
+    },
+    {
+      "path": "src/lib/schemas.ts",
+      "name": "schemas.ts",
+      "extension": ".ts",
+      "size_bytes": 3579,
+      "line_count": 112,
+      "category": "Mobile Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [
+          "AdoptionRequest",
+          "Appointment",
+          "FeedListing",
+          "ListingDetail",
+          "Order",
+          "Pet",
+          "Product",
+          "Service",
+          "Species",
+          "Vet"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "AdoptionRequest",
+          "Appointment",
+          "FeedListing",
+          "ListingDetail",
+          "Order",
+          "Pet",
+          "Product",
+          "Service",
+          "Species",
+          "UuidParam",
+          "Vet"
+        ]
+      }
+    },
+    {
+      "path": "src/lib/supabase.ts",
+      "name": "supabase.ts",
+      "extension": ".ts",
+      "size_bytes": 1614,
+      "line_count": 49,
+      "category": "Mobile Library/Service",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "supabase"
+        ]
+      }
+    },
+    {
+      "path": "src/providers/AuthProvider.tsx",
+      "name": "AuthProvider.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2312,
+      "line_count": 61,
+      "category": "Mobile Provider",
+      "context": {
+        "components": [
+          "AuthProvider"
+        ],
+        "hooks": [
+          "useAuth"
+        ],
+        "functions": [
+          "useAuth"
+        ],
+        "types_interfaces": [
+          "AuthContextValue"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "AuthProvider",
+          "useAuth"
+        ]
+      }
+    },
+    {
+      "path": "src/providers/CartProvider.tsx",
+      "name": "CartProvider.tsx",
+      "extension": ".tsx",
+      "size_bytes": 2555,
+      "line_count": 75,
+      "category": "Mobile Provider",
+      "context": {
+        "components": [
+          "CartProvider"
+        ],
+        "hooks": [
+          "useCart"
+        ],
+        "functions": [
+          "useCart"
+        ],
+        "types_interfaces": [
+          "CartContextValue",
+          "CartLine"
+        ],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "CartProvider",
+          "useCart"
+        ]
+      }
+    },
+    {
+      "path": "src/theme.ts",
+      "name": "theme.ts",
+      "extension": ".ts",
+      "size_bytes": 929,
+      "line_count": 21,
+      "category": "Mobile Core",
+      "context": {
+        "components": [],
+        "hooks": [],
+        "functions": [],
+        "types_interfaces": [],
+        "classes": [],
+        "routes": [],
+        "is_server_action": false,
+        "exports": [
+          "colors",
+          "radius",
+          "space"
+        ]
+      }
+    },
+    {
+      "path": "supabase/admin.sql",
+      "name": "admin.sql",
+      "extension": ".sql",
+      "size_bytes": 8505,
+      "line_count": 160,
+      "category": "Database & Backend (Supabase)",
+      "context": {
+        "tables": [],
+        "functions": [
+          "admin_add_vet_member",
+          "admin_create_vet",
+          "admin_members",
+          "admin_remove_vet_member",
+          "admin_set_vet_commission",
+          "admin_set_vet_status",
+          "admin_vet_summary"
+        ],
+        "triggers": [],
+        "policies": [
+          "products_select ON products",
+          "services_select ON services",
+          "listings_select ON adoption_listings"
+        ],
+        "views": []
+      }
+    },
+    {
+      "path": "supabase/panel.sql",
+      "name": "panel.sql",
+      "extension": ".sql",
+      "size_bytes": 3420,
+      "line_count": 61,
+      "category": "Database & Backend (Supabase)",
+      "context": {
+        "tables": [],
+        "functions": [],
+        "triggers": [],
+        "policies": [
+          "profiles_select_vet_customers ON profiles",
+          "pets_select_vet ON pets",
+          "pet_photos_public_read ON storage",
+          "pet_photos_vet_insert ON storage",
+          "pet_photos_vet_update ON storage",
+          "pet_photos_vet_delete ON storage"
+        ],
+        "views": []
+      }
+    },
+    {
+      "path": "supabase/schema.sql",
+      "name": "schema.sql",
+      "extension": ".sql",
+      "size_bytes": 27718,
+      "line_count": 597,
+      "category": "Database & Backend (Supabase)",
+      "context": {
+        "tables": [
+          "adoption_listings",
+          "adoption_requests",
+          "adoption_swipes",
+          "appointments",
+          "order_items",
+          "orders",
+          "payments",
+          "pets",
+          "product_categories",
+          "products",
+          "profiles",
+          "services",
+          "vet_hours",
+          "vet_members",
+          "vets"
+        ],
+        "functions": [
+          "cancel_my_appointment",
+          "cancel_my_order",
+          "create_order",
+          "get_adoption_feed",
+          "handle_new_user",
+          "is_admin",
+          "is_vet_member",
+          "request_appointment",
+          "restore_stock_on_cancel"
+        ],
+        "triggers": [
+          "on_auth_user_created",
+          "orders_restore_stock"
+        ],
+        "policies": [
+          "profiles_select_own ON profiles",
+          "profiles_update_own ON profiles",
+          "vets_select ON vets",
+          "vets_update_member ON vets",
+          "vets_admin_all ON vets",
+          "vet_members_select ON vet_members",
+          "vet_hours_select   ON vet_hours",
+          "vet_hours_manage   ON vet_hours",
+          "pets_own ON pets",
+          "listings_select ON adoption_listings",
+          "listings_manage ON adoption_listings",
+          "swipes_own ON adoption_swipes",
+          "requests_insert_own ON adoption_requests",
+          "requests_select ON adoption_requests",
+          "requests_update_vet ON adoption_requests",
+          "requests_withdraw_own ON adoption_requests",
+          "services_select ON services",
+          "services_manage ON services",
+          "categories_select ON product_categories",
+          "categories_admin  ON product_categories",
+          "products_select ON products",
+          "products_manage ON products",
+          "appointments_select ON appointments",
+          "appointments_update_vet ON appointments",
+          "orders_select ON orders",
+          "orders_update_vet ON orders",
+          "order_items_select ON order_items",
+          "payments_admin ON payments"
+        ],
+        "views": []
+      }
+    },
+    {
+      "path": "supabase/seed.sql",
+      "name": "seed.sql",
+      "extension": ".sql",
+      "size_bytes": 6576,
+      "line_count": 95,
+      "category": "Database & Backend (Supabase)",
+      "context": {
+        "tables": [],
+        "functions": [],
+        "triggers": [],
+        "policies": [],
+        "views": []
+      }
+    },
+    {
+      "path": "tools/code_inspector.py",
+      "name": "code_inspector.py",
+      "extension": ".py",
+      "size_bytes": 25974,
+      "line_count": 633,
+      "category": "Developer Tools",
+      "context": {
+        "classes": [
+          {
+            "name": "CodeInspector",
+            "methods": [
+              "__init__",
+              "should_ignore_dir",
+              "should_ignore_file",
+              "categorize_path",
+              "extract_typescript_javascript_context",
+              "extract_python_context",
+              "extract_sql_context",
+              "extract_json_context",
+              "inspect_file",
+              "scan",
+              "generate_json",
+              "generate_markdown",
+              "generate_text_tree"
+            ]
+          }
+        ],
+        "functions": [
+          "load_gitignore_patterns",
+          "main"
+        ],
+        "async_functions": [],
+        "docstring": "code_inspector.py - Herramienta de Mapeo Interno del Repositorio\n================================================================\nExplora de forma recursiva la estructura de carpetas del proyecto, ignorando\narchivos irrelevantes (node_modules, .git, venv, builds, etc.), extrae contexto\ntécnico clave (componentes, hooks, rutas, modelos SQL, funciones, tipos) y genera\nun mapa de referencia rápida para el agente y desarrolladores.\n\nUso:\n    py tools/code_inspector.py\n    py tools/code_inspector.py --format markdown --output project_map.md\n    py tools/code_inspector.py --format json --output project_map.json\n    py tools/code_inspector.py --save"
+      }
+    },
+    {
+      "path": "tsconfig.json",
+      "name": "tsconfig.json",
+      "extension": ".json",
+      "size_bytes": 322,
+      "line_count": 21,
+      "category": "Project Root Config/Doc",
+      "context": {
+        "summary": "",
+        "scripts": [],
+        "dependencies_count": 0
+      }
+    }
+  ]
+}

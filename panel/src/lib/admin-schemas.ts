@@ -4,13 +4,13 @@ export const AdminVet = z.object({
   vet_id: z.string(),
   vet_name: z.string(),
   vet_status: z.enum(['pending', 'active', 'suspended']),
-  commission_rate: z.number(),
+  commission_rate: z.coerce.number(),
   offers_home_visits: z.boolean(),
   city: z.string(),
   created_at: z.string(),
-  delivered_orders: z.number(),
-  sales: z.number(),
-  commission: z.number(),
+  delivered_orders: z.coerce.number(),
+  sales: z.coerce.number(),
+  commission: z.coerce.number(),
 });
 export type AdminVet = z.infer<typeof AdminVet>;
 

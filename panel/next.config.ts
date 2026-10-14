@@ -2,8 +2,23 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
-    // Las fotos de mascotas se envían por Server Action (máx. 5 MB c/u)
-    serverActions: { bodySizeLimit: '6mb' },
+    // SEC-09: Las fotos de mascotas pueden sumar hasta 25 MB (5 fotos de máx 5 MB c/u)
+    serverActions: { bodySizeLimit: '25mb' },
+  },
+  // SEC-05: Cabeceras de seguridad HTTP estándar contra Clickjacking, MIME-sniffing y fugas de referencia
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'X-XSS-Protection', value: '1; mode=block' },
+        ],
+      },
+    ];
   },
 };
 

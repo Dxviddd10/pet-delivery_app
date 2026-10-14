@@ -256,7 +256,8 @@ export function useProducts(params: { search: string; vetId: string | null }) {
         .neq('kind', 'rx_medicine') // MVP: sin medicamentos con fórmula
         .order('name')
         .limit(100);
-      const term = params.search.trim().replace(/[%,]/g, ' ');
+      // SEC-10: Sanitización estricta de comodines y caracteres de escape para consultas ilike
+      const term = params.search.trim().replace(/[%_\\,]/g, ' ');
       if (term) q = q.ilike('name', `%${term}%`);
       if (params.vetId) q = q.eq('vet_id', params.vetId);
       const { data, error } = await q;

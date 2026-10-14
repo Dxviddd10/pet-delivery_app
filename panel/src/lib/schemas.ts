@@ -8,9 +8,9 @@ export const VetRow = z.object({
   whatsapp: z.string().nullable(),
   address: z.string().nullable(),
   offers_home_visits: z.boolean(),
-  home_fee: z.number(),
-  delivery_fee: z.number(),
-  commission_rate: z.number(),
+  home_fee: z.coerce.number(),
+  delivery_fee: z.coerce.number(),
+  commission_rate: z.coerce.number(),
   status: z.enum(['pending', 'active', 'suspended']),
 });
 export type VetRow = z.infer<typeof VetRow>;

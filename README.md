@@ -24,6 +24,8 @@ de veterinarias aliadas de Tunja. React Native (Expo SDK 57 + Expo Router) + Sup
 
 1. **Supabase**: crea un proyecto en https://supabase.com.
 2. En *SQL Editor* ejecuta, en este orden: `supabase/schema.sql` y luego `supabase/seed.sql`.
+   Si vas a usar liquidaciones/comisiones y pago en línea (Plan A), ejecuta además `supabase/02_payouts_plan_a.sql`.
+   Para el panel web, ejecuta también `supabase/panel.sql` y `supabase/admin.sql`.
 3. En *Authentication → Providers → Email* puedes desactivar "Confirm email" mientras pruebas.
 4. Copia `.env.example` a `.env` y completa la URL y la `anon key` (Project Settings → API).
 5. Instala y ejecuta:
@@ -55,6 +57,8 @@ src/
 panel/                  Panel web (Next.js) para veterinarias
 supabase/
   schema.sql            tablas, enums, RPC, triggers, RLS
+  02_payouts_plan_a.sql  liquidaciones a veterinarias (payout_batches), pago online y RPCs de saldos
+  functions/            Edge Functions del pago en línea con Wompi (ver functions/README.md)
   panel.sql             políticas y permisos del panel + bucket de fotos
   admin.sql             rol de administrador (aprobar veterinarias, comisiones, personal)
   seed.sql              3 veterinarias, servicios, productos y 4 mascotas de ejemplo

@@ -39,6 +39,7 @@ function Gate() {
       <Stack.Screen name="book/[vetId]" options={{ title: 'Agendar cita' }} />
       <Stack.Screen name="adoption/[id]" options={{ title: 'Solicitar adopción' }} />
       <Stack.Screen name="cart" options={{ title: 'Tu carrito' }} />
+      <Stack.Screen name="mock-pay" options={{ title: 'Pago simulado', presentation: 'modal' }} />
       <Stack.Screen name="pet/new" options={{ title: 'Nueva mascota' }} />
     </Stack>
   );

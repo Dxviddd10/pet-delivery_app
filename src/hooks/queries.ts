@@ -272,7 +272,7 @@ export type OrderInput = {
   items: { product_id: string; quantity: number }[];
   deliveryMode: 'pickup' | 'delivery';
   address: string;
-  paymentMethod: 'cash_on_delivery' | 'transfer';
+  paymentMethod: 'cash_on_delivery' | 'transfer' | 'online';
   notes: string;
 };
 
@@ -287,6 +287,69 @@ export function useCreateOrder() {
         p_address: input.deliveryMode === 'delivery' ? input.address : null,
         p_payment_method: input.paymentMethod,
         p_notes: input.notes.trim() || null,
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['my-orders'] });
+      qc.invalidateQueries({ queryKey: ['products'] });
+    },
+  });
+}
+
+// Pago en línea: crea el pedido y devuelve cómo continuar.
+// - provider 'wompi': viene `checkout_url` para abrir la pasarela real.
+// - provider 'mock' : no hay URL; la app abre la pantalla /mock-pay (MODO PRUEBA).
+export type CheckoutResult = {
+  order_id: string;
+  reference: string;
+  provider: string;
+  checkout_url?: string | null;
+  mode?: string;
+  subtotal?: number;
+  delivery_fee?: number;
+  total?: number;
+};
+
+export function useCreateCheckout() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: Omit<OrderInput, 'paymentMethod'>): Promise<CheckoutResult> => {
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          vet_id: input.vetId,
+          items: input.items,
+          delivery_mode: input.deliveryMode,
+          address: input.deliveryMode === 'delivery' ? input.address : null,
+          notes: input.notes.trim() || null,
+        },
+      });
+      if (error) throw error;
+      const res = data as CheckoutResult | null;
+      if (!res?.provider) throw new Error((data as any)?.error ?? 'No se pudo iniciar el pago');
+      // Los proveedores reales sí necesitan URL de pasarela; el mock no.
+      if (res.provider !== 'mock' && !res.checkout_url) {
+        throw new Error((data as any)?.error ?? 'No se pudo iniciar el pago');
+      }
+      return res;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['my-orders'] });
+      qc.invalidateQueries({ queryKey: ['products'] });
+    },
+  });
+}
+
+// MODO PRUEBA: confirma (o rechaza) el pago simulado de un pedido mock.
+// El pago lo marca el servidor vía RPC SECURITY DEFINER (nunca el cliente
+// escribe payment_status directamente).
+export function useMockPay() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (input: { orderId: string; approve: boolean }) => {
+      const { error } = await supabase.rpc('mock_pay_order', {
+        p_order_id: input.orderId,
+        p_approve: input.approve,
       });
       if (error) throw error;
     },

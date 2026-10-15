@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Button, EmptyState, Row, Screen, SectionTitle, TextField, styles } from '@/components/ui';
 import { Footer, OptionTile, productTile } from '@/components/extras';
-import { useCreateOrder, useVet } from '@/hooks/queries';
+import { useCreateCheckout, useCreateOrder, useVet } from '@/hooks/queries';
 import { useCart } from '@/providers/CartProvider';
 import { errMsg, formatCOP } from '@/lib/format';
 import { colors, radius, space } from '@/theme';
@@ -12,8 +12,9 @@ export default function CartScreen() {
   const cart = useCart();
   const vet = useVet(cart.vetId);
   const createOrder = useCreateOrder();
+  const createCheckout = useCreateCheckout();
   const [deliveryMode, setDeliveryMode] = useState<'pickup' | 'delivery'>('pickup');
-  const [paymentMethod, setPaymentMethod] = useState<'cash_on_delivery' | 'transfer'>('cash_on_delivery');
+  const [paymentMethod, setPaymentMethod] = useState<'cash_on_delivery' | 'transfer' | 'online'>('cash_on_delivery');
   const [address, setAddress] = useState('');
   const [notes, setNotes] = useState('');
 
@@ -38,15 +39,44 @@ export default function CartScreen() {
     if (deliveryMode === 'delivery' && address.trim().length < 6) {
       return Alert.alert('Falta la dirección', 'Escribe la dirección completa de entrega.');
     }
+    const base = {
+      vetId,
+      items: cart.lines.map((l) => ({ product_id: l.product.id, quantity: l.quantity })),
+      deliveryMode,
+      address,
+      notes,
+    };
+
+    // Pago en línea: crea el pedido y continúa según el proveedor.
+    if (paymentMethod === 'online') {
+      return createCheckout.mutate(base, {
+        onSuccess: (res) => {
+          cart.clear();
+          // MODO PRUEBA: no hay pasarela; abrimos la pantalla nativa de pago simulado.
+          if (res.provider === 'mock') {
+            router.replace({
+              pathname: '/mock-pay',
+              params: { orderId: res.order_id, total: String(res.total ?? total) },
+            });
+            return;
+          }
+          // Pasarela real (Wompi): abrimos el checkout en el navegador.
+          void (async () => {
+            try {
+              await Linking.openURL(res.checkout_url!);
+            } catch {
+              Alert.alert('No se pudo abrir el pago', res.checkout_url ?? '');
+            }
+            Alert.alert('Pedido creado', 'Completa el pago en la ventana que se abrió. Verás el estado en "Mi actividad" cuando se confirme.');
+            router.replace('/activity');
+          })();
+        },
+        onError: (e) => Alert.alert('No se pudo iniciar el pago', errMsg(e)),
+      });
+    }
+
     createOrder.mutate(
-      {
-        vetId,
-        items: cart.lines.map((l) => ({ product_id: l.product.id, quantity: l.quantity })),
-        deliveryMode,
-        address,
-        paymentMethod,
-        notes,
-      },
+      { ...base, paymentMethod },
       {
         onSuccess: () => {
           cart.clear();
@@ -103,6 +133,7 @@ export default function CartScreen() {
         <View style={{ flexDirection: 'row', gap: space.sm }}>
           <OptionTile stacked emoji="💵" title="Contra entrega" subtitle="Pagas al recibir" selected={paymentMethod === 'cash_on_delivery'} onPress={() => setPaymentMethod('cash_on_delivery')} style={{ flex: 1 }} />
           <OptionTile stacked emoji="🏦" title="Transferencia" subtitle="Te enviarán los datos" selected={paymentMethod === 'transfer'} onPress={() => setPaymentMethod('transfer')} style={{ flex: 1 }} />
+          <OptionTile stacked emoji="💳" title="En línea" subtitle="Tarjeta o PSE" selected={paymentMethod === 'online'} onPress={() => setPaymentMethod('online')} style={{ flex: 1 }} />
         </View>
 
         <View style={{ marginTop: space.md }}>
@@ -123,7 +154,7 @@ export default function CartScreen() {
             <Text style={styles.muted}>Total</Text>
             <Text style={{ fontSize: 24, fontWeight: '900', color: colors.text, letterSpacing: -0.5 }}>{formatCOP(total)}</Text>
           </View>
-          <Button title="Confirmar pedido" onPress={submit} loading={createOrder.isPending} style={{ flex: 1 }} />
+          <Button title="Confirmar pedido" onPress={submit} loading={createOrder.isPending || createCheckout.isPending} style={{ flex: 1 }} />
         </View>
       </Footer>
     </Screen>

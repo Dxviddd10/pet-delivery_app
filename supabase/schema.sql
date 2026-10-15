@@ -366,7 +366,7 @@ declare
   v_subtotal int := 0; v_fee int := 0; v_commission int; v_order orders;
 begin
   if auth.uid() is null then raise exception 'No autenticado'; end if;
-  if p_payment_method = 'online' then raise exception 'El pago en línea aún no está disponible'; end if;
+  -- El pago en línea se habilita en 02_payouts_plan_a.sql (Plan A)
   if jsonb_typeof(p_items) <> 'array' or jsonb_array_length(p_items) = 0 then
     raise exception 'El carrito está vacío';
   end if;
